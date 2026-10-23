@@ -142,25 +142,36 @@ import { url } from '../utils/url';
 <script>
   const CONSENT_KEY = 'ss_analytics_consent';
 
+  // Guard against loadGA() being called more than once per page load.
+  // Without this a second Accept click would append a duplicate gtag.js
+  // script tag and fire duplicate page_view events.
+  let gaLoaded = false;
+
   // ── Load GA4 ──────────────────────────────────────────────────────────────
   function loadGA(): void {
+    if (gaLoaded) return;
     const measurementId = (window as any).__GA_MEASUREMENT_ID__ as string | undefined;
     // If empty or unset, analytics is not configured — do nothing.
     if (!measurementId) return;
 
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    script.async = true;
-    document.head.appendChild(script);
+    gaLoaded = true;
 
+    // Set up the dataLayer queue BEFORE appending the async script.
+    // gtag.js drains this queue when it loads, so these commands are safe
+    // to call synchronously here even though the library hasn't fetched yet.
     (window as any).dataLayer = (window as any).dataLayer || [];
     function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
     (window as any).gtag = gtag;
     gtag('js', new Date());
-    // Note: anonymize_ip is a no-op in GA4 (always anonymised); kept for clarity.
     gtag('config', measurementId, {
       cookie_flags: 'SameSite=None;Secure',
     });
+
+    // Append the gtag.js script tag after queueing the commands.
+    const script = document.createElement('script');
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+    script.async = true;
+    document.head.appendChild(script);
   }
 
   // ── Show/hide the "Manage cookie settings" trigger ───────────────────────

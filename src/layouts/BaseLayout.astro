@@ -124,8 +124,10 @@ const baseUrl = base.replace(/\/$/, '') + '/';
   <!-- Site verification (add tokens after connecting services) -->
   <!-- <meta name="google-site-verification" content="YOUR_TOKEN_HERE" /> -->
 
-  <!-- GA4 Measurement ID for consent-gated loader in CookieConsent.astro -->
-  <script define:vars={{ GA_MEASUREMENT_ID }}>
+  <!-- GA4 Measurement ID for consent-gated loader in CookieConsent.astro.
+       is:inline is REQUIRED with define:vars — without it Astro bundles the
+       script as a module and silently drops the inlined variable. -->
+  <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
     window.__GA_MEASUREMENT_ID__ = GA_MEASUREMENT_ID;
   </script>
 </head>
