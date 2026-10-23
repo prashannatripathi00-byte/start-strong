@@ -1,8 +1,8 @@
 ---
 // privacy-policy.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url';
 
-const base = import.meta.env.BASE_URL;
 const lastUpdated = '23 October 2026';
 ---
 
@@ -16,7 +16,7 @@ const lastUpdated = '23 October 2026';
     <div class="container">
       <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
         <ol role="list">
-          <li><a href={base}>Home</a></li>
+          <li><a href={url('')}>Home</a></li>
           <li aria-hidden="true">/</li>
           <li aria-current="page">Privacy Policy</li>
         </ol>
@@ -40,7 +40,7 @@ const lastUpdated = '23 October 2026';
         <p>
           Start Strong is an independent running and fitness information website.
           It is not affiliated with any commercial sportswear brand or organisation.
-          For questions about this policy, please <a href={`${base}contact/`}>contact us</a>.
+          For questions about this policy, please <a href={url('contact/')}>contact us</a>.
         </p>
       </section>
 
@@ -219,7 +219,7 @@ const lastUpdated = '23 October 2026';
         <h2>12. Contact</h2>
         <p>
           If you have questions or concerns about this Privacy Policy, please
-          <a href={`${base}contact/`}>contact us</a>.
+          <a href={url('contact/')}>contact us</a>.
         </p>
       </section>
 

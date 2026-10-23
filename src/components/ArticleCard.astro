@@ -1,6 +1,7 @@
 ---
 // ArticleCard.astro — reusable blog card component
 import type { CollectionEntry } from 'astro:content';
+import { url } from '../utils/url';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -9,7 +10,6 @@ interface Props {
 
 const { post, featured = false } = Astro.props;
 const { title, description, pubDate, category, image, imageAlt, readingTime } = post.data;
-const base = import.meta.env.BASE_URL;
 
 const dateFormatted = pubDate.toLocaleDateString('en-IE', {
   year: 'numeric',
@@ -21,7 +21,7 @@ const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '
 ---
 
 <article class={`card ${featured ? 'card--featured' : ''}`}>
-  <a href={`${base}blog/${post.slug}/`} class="card__image-link" tabindex="-1" aria-hidden="true">
+  <a href={url(`blog/${post.slug}/`)} class="card__image-link" tabindex="-1" aria-hidden="true">
     {image ? (
       <img
         src={image}
@@ -39,7 +39,7 @@ const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '
   <div class="card__body">
     <div class="card__meta">
       <a
-        href={`${base}blog/?category=${categorySlug}`}
+        href={url(`blog/?category=${categorySlug}`)}
         class="badge badge--orange"
         aria-label={`Category: ${category}`}
       >
@@ -56,7 +56,7 @@ const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '
     </div>
 
     <h3 class="card__title">
-      <a href={`${base}blog/${post.slug}/`} data-ga-article={title}>
+      <a href={url(`blog/${post.slug}/`)} data-ga-article={title}>
         {title}
       </a>
     </h3>
@@ -65,7 +65,7 @@ const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '
 
     <div class="card__footer">
       <a
-        href={`${base}blog/${post.slug}/`}
+        href={url(`blog/${post.slug}/`)}
         class="btn btn--secondary btn--sm"
         aria-label={`Read ${title}`}
       >

@@ -2,8 +2,7 @@
 // about.astro — About Start Strong
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTASection from '../components/CTASection.astro';
-
-const base = import.meta.env.BASE_URL;
+import { url } from '../utils/url';
 ---
 
 <BaseLayout
@@ -16,7 +15,7 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
         <ol role="list">
-          <li><a href={base}>Home</a></li>
+          <li><a href={url('')}>Home</a></li>
           <li aria-hidden="true">/</li>
           <li aria-current="page">About</li>
         </ol>
@@ -176,7 +175,7 @@ const base = import.meta.env.BASE_URL;
         </ul>
         <p>
           If you encounter an accessibility issue on Start Strong, please
-          <a href={`${base}contact/`}>get in touch</a> and we will address it.
+          <a href={url('contact/')}>get in touch</a> and we will address it.
           Full WCAG compliance validation requires expert accessibility review and
           assistive technology testing beyond automated tools.
         </p>

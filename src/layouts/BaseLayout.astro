@@ -53,6 +53,9 @@ const canonical = canonicalUrl ?? `${siteOrigin}${Astro.url.pathname}`;
 // Leave blank (or omit) to disable analytics entirely.
 // Add to .env:  PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
+
+// Base URL with guaranteed trailing slash — safe for href concatenation in this file.
+const baseUrl = base.replace(/\/$/, '') + '/';
 ---
 
 <!doctype html>
@@ -114,9 +117,9 @@ const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
   />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-  {/* apple-touch-icon.png — add this file to public/icons/ to enable iOS home-screen icon */}
-  {/* <link rel="apple-touch-icon" href={`${base}icons/apple-touch-icon.png`} /> */}
+  <link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
+  {/* apple-touch-icon.png — add this file to public/icons/ then uncomment:
+       <link rel="apple-touch-icon" href={url('icons/apple-touch-icon.png')} />  */}
 
   <!-- Site verification (add tokens after connecting services) -->
   <!-- <meta name="google-site-verification" content="YOUR_TOKEN_HERE" /> -->

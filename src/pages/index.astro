@@ -4,8 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import CTASection from '../components/CTASection.astro';
 import { getCollection } from 'astro:content';
-
-const base = import.meta.env.BASE_URL;
+import { url } from '../utils/url';
 
 // Fetch featured + latest posts
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -63,14 +62,14 @@ const categories = [
         </p>
         <div class="hero__buttons">
           <a
-            href={`${base}start-running/`}
+            href={url('start-running/')}
             class="btn btn--primary btn--lg"
             data-ga-cta="hero_start_running"
           >
             Start Running
           </a>
           <a
-            href={`${base}blog/`}
+            href={url('blog/')}
             class="btn btn--outline-white btn--lg"
             data-ga-cta="hero_explore_blog"
           >
@@ -140,7 +139,7 @@ const categories = [
             <li>✔ Warm-up, cool-down and recovery advice</li>
             <li>✔ Motivation tips for tough days</li>
           </ul>
-          <a href={`${base}start-running/`} class="btn btn--primary" data-ga-cta="featured_guide">
+          <a href={url('start-running/')} class="btn btn--primary" data-ga-cta="featured_guide">
             View the Full Plan →
           </a>
         </div>
@@ -176,7 +175,7 @@ const categories = [
       <div class="categories-grid">
         {categories.map(cat => (
           <a
-            href={`${base}blog/?category=${cat.slug}`}
+            href={url(`blog/?category=${cat.slug}`)}
             class="category-card"
             data-ga-cta={`category_${cat.slug}`}
           >
@@ -212,7 +211,7 @@ const categories = [
         </div>
       )}
       <div class="section-footer text-center" style="margin-top:var(--space-3xl)">
-        <a href={`${base}blog/`} class="btn btn--secondary btn--lg">View All Articles →</a>
+        <a href={url('blog/')} class="btn btn--secondary btn--lg">View All Articles →</a>
       </div>
     </div>
   </section>
@@ -229,7 +228,7 @@ const categories = [
             can make a significant difference to comfort and injury risk. Our gear
             guides help you make informed decisions without the pressure.
           </p>
-          <a href={`${base}running-gear/`} class="btn btn--primary" data-ga-cta="homepage_gear">
+          <a href={url('running-gear/')} class="btn btn--primary" data-ga-cta="homepage_gear">
             Explore Gear Guides →
           </a>
         </div>

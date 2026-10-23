@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import SocialShare from '../components/SocialShare.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import type { CollectionEntry } from 'astro:content';
+import { url } from '../utils/url';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -12,7 +13,6 @@ interface Props {
 
 const { post, relatedPosts = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, author, category, tags, image, imageAlt, readingTime } = post.data;
-const base = import.meta.env.BASE_URL;
 // import.meta.env.SITE is the full site URL including base path.
 const site = (import.meta.env.SITE ?? '').replace(/\/$/, '');
 const articleUrl = `${site}/blog/${post.slug}/`;
@@ -81,16 +81,16 @@ const jsonLD = {
       <!-- Breadcrumb -->
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol role="list">
-          <li><a href={base}>Home</a></li>
+          <li><a href={url('')}>Home</a></li>
           <li aria-hidden="true">/</li>
-          <li><a href={`${base}blog/`}>Blog</a></li>
+          <li><a href={url('blog/')}>Blog</a></li>
           <li aria-hidden="true">/</li>
           <li aria-current="page">{title}</li>
         </ol>
       </nav>
 
       <!-- Category badge -->
-      <a href={`${base}blog/?category=${categorySlug}`} class="badge badge--orange article-category">
+      <a href={url(`blog/?category=${categorySlug}`)} class="badge badge--orange article-category">
         {category}
       </a>
 
@@ -174,7 +174,7 @@ const jsonLD = {
 
           <div class="sidebar-card sidebar-card--cta">
             <p class="sidebar-cta__text">Ready to start your running journey?</p>
-            <a href={`${base}start-running/`} class="btn btn--primary" style="width:100%; justify-content:center;">
+            <a href={url('start-running/')} class="btn btn--primary" style="width:100%; justify-content:center;">
               Start Running Guide →
             </a>
           </div>
@@ -205,8 +205,8 @@ const jsonLD = {
         Explore our beginner guides, training tips and gear advice — all in one place.
       </p>
       <div style="display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
-        <a href={`${base}start-running/`} class="btn btn--primary btn--lg">Start Running</a>
-        <a href={`${base}blog/`} class="btn btn--outline-white btn--lg">Explore the Blog</a>
+        <a href={url('start-running/')} class="btn btn--primary btn--lg">Start Running</a>
+        <a href={url('blog/')} class="btn btn--outline-white btn--lg">Explore the Blog</a>
       </div>
     </div>
   </section>

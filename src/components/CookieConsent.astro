@@ -12,7 +12,7 @@
 //
 // Consent is stored in browser localStorage under the key 'ss_analytics_consent'
 // with values 'granted' or 'denied'.
-const base = import.meta.env.BASE_URL;
+import { url } from '../utils/url';
 ---
 
 <!-- Consent banner -->
@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL;
       We use <strong>Google Analytics</strong> to understand how visitors use
       Start Strong. Analytics data is anonymous. Google Fonts are also loaded
       unconditionally on every page — see our
-      <a href={`${base}privacy-policy/`}>Privacy Policy</a> for details.
+      <a href={url('privacy-policy/')}>Privacy Policy</a> for details.
     </p>
     <div class="cookie-banner__actions">
       <button id="cookie-accept" class="btn btn--primary btn--sm" type="button">

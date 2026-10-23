@@ -1,8 +1,7 @@
 ---
 // 404.astro — Custom not-found page
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const base = import.meta.env.BASE_URL;
+import { url } from '../utils/url';
 ---
 
 <BaseLayout
@@ -21,16 +20,16 @@ const base = import.meta.env.BASE_URL;
         Let's get you back on track.
       </p>
       <div class="not-found__actions">
-        <a href={base} class="btn btn--primary btn--lg">Go to Homepage</a>
-        <a href={`${base}blog/`} class="btn btn--secondary btn--lg">Browse the Blog</a>
+        <a href={url('')} class="btn btn--primary btn--lg">Go to Homepage</a>
+        <a href={url('blog/')} class="btn btn--secondary btn--lg">Browse the Blog</a>
       </div>
       <div class="not-found__links">
         <p>Or jump straight to:</p>
         <ul role="list">
-          <li><a href={`${base}start-running/`}>Start Running Guide</a></li>
-          <li><a href={`${base}running-gear/`}>Running Gear</a></li>
-          <li><a href={`${base}about/`}>About Start Strong</a></li>
-          <li><a href={`${base}contact/`}>Contact Us</a></li>
+          <li><a href={url('start-running/')}>Start Running Guide</a></li>
+          <li><a href={url('running-gear/')}>Running Gear</a></li>
+          <li><a href={url('about/')}>About Start Strong</a></li>
+          <li><a href={url('contact/')}>Contact Us</a></li>
         </ul>
       </div>
     </div>

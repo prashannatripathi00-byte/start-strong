@@ -1,5 +1,7 @@
 ---
 // CTASection.astro — reusable call-to-action block
+import { url } from '../utils/url';
+
 interface Props {
   heading?: string;
   subtext?: string;
@@ -15,14 +17,12 @@ const {
   heading    = 'Start Your Running Journey Today',
   subtext    = 'Practical guides, training plans and gear advice — all free, all beginner-friendly.',
   primaryLabel   = 'Start Running',
-  primaryHref    = '/start-running/',
+  primaryHref    = 'start-running/',
   secondaryLabel = 'Explore the Blog',
-  secondaryHref  = '/blog/',
+  secondaryHref  = 'blog/',
   dark = true,
   gaLabel = 'cta_section',
 } = Astro.props;
-
-const base = import.meta.env.BASE_URL;
 ---
 
 <section class={`cta-section section--sm ${dark ? 'bg-dark' : 'bg-ivory'}`}>
@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL;
     )}
     <div class="cta-section__buttons">
       <a
-        href={`${base}${primaryHref.replace(/^\//, '')}`}
+        href={url(primaryHref.replace(/^\//, ''))}
         class="btn btn--primary btn--lg"
         data-ga-cta={`${gaLabel}_primary`}
       >
@@ -43,7 +43,7 @@ const base = import.meta.env.BASE_URL;
       </a>
       {secondaryLabel && (
         <a
-          href={`${base}${secondaryHref.replace(/^\//, '')}`}
+          href={url(secondaryHref.replace(/^\//, ''))}
           class={`btn btn--lg ${dark ? 'btn--outline-white' : 'btn--secondary'}`}
           data-ga-cta={`${gaLabel}_secondary`}
         >

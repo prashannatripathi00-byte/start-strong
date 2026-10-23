@@ -2,8 +2,7 @@
 // start-running.astro — Beginner running guide page
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTASection from '../components/CTASection.astro';
-
-const base = import.meta.env.BASE_URL;
+import { url } from '../utils/url';
 ---
 
 <BaseLayout
@@ -16,7 +15,7 @@ const base = import.meta.env.BASE_URL;
       <div class="page-hero__content">
         <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
           <ol role="list">
-            <li><a href={base}>Home</a></li>
+            <li><a href={url('')}>Home</a></li>
             <li aria-hidden="true">/</li>
             <li aria-current="page">Start Running</li>
           </ol>
@@ -73,7 +72,7 @@ const base = import.meta.env.BASE_URL;
           Here is what you genuinely need before your first run:
         </p>
         <ul>
-          <li><strong>A supportive pair of running shoes.</strong> You do not need the most expensive model, but footwear that fits well and provides appropriate cushioning reduces the risk of discomfort and injury. See our <a href={`${base}running-gear/`}>Running Gear Guide</a> for practical advice.</li>
+          <li><strong>A supportive pair of running shoes.</strong> You do not need the most expensive model, but footwear that fits well and provides appropriate cushioning reduces the risk of discomfort and injury. See our <a href={url('running-gear/')}>Running Gear Guide</a> for practical advice.</li>
           <li><strong>Comfortable clothing.</strong> Breathable, moisture-wicking fabric helps regulate temperature. Avoid heavy cotton on warm days.</li>
           <li><strong>A safe, flat route.</strong> A local park, quiet road or running track is ideal for beginners. Flat ground is easier on the joints when you are starting out.</li>
           <li><strong>Water.</strong> Stay hydrated before and after your run. For runs under 30 minutes, you likely do not need to carry water during the run itself.</li>
@@ -203,7 +202,7 @@ const base = import.meta.env.BASE_URL;
         </div>
         <p style="margin-top:var(--space-xl)">
           For a deeper dive, read our article:
-          <a href={`${base}blog/common-running-mistakes-beginners-should-avoid/`}>
+          <a href={url('blog/common-running-mistakes-beginners-should-avoid/')}>
             Common Running Mistakes Beginners Should Avoid
           </a>.
         </p>
@@ -325,7 +324,7 @@ const base = import.meta.env.BASE_URL;
         </ul>
         <p>
           For more motivational strategies, read:
-          <a href={`${base}blog/how-to-stay-motivated-and-build-a-running-habit/`}>
+          <a href={url('blog/how-to-stay-motivated-and-build-a-running-habit/')}>
             How to Stay Motivated and Build a Running Habit
           </a>.
         </p>
@@ -367,9 +366,9 @@ const base = import.meta.env.BASE_URL;
         <h2>Continue Your Journey</h2>
         <div class="grid-3">
           {[
-            { href: `${base}blog/how-to-start-running-as-a-complete-beginner/`, label: 'Beginner Running Article' },
-            { href: `${base}running-gear/`, label: 'Running Gear Guide' },
-            { href: `${base}blog/how-to-stay-motivated-and-build-a-running-habit/`, label: 'Motivation & Habits' },
+            { href: url('blog/how-to-start-running-as-a-complete-beginner/'), label: 'Beginner Running Article' },
+            { href: url('running-gear/'), label: 'Running Gear Guide' },
+            { href: url('blog/how-to-stay-motivated-and-build-a-running-habit/'), label: 'Motivation & Habits' },
           ].map(link => (
             <a href={link.href} class="related-link-card">
               <span>{link.label}</span>
