@@ -1,0 +1,262 @@
+---
+// privacy-policy.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const lastUpdated = '23 October 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Start Strong's privacy policy — how we collect, use and protect data, our use of Google Analytics and your rights as a visitor."
+  noIndex={false}
+>
+
+  <section class="page-hero bg-dark">
+    <div class="container">
+      <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
+        <ol role="list">
+          <li><a href={base}>Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">Privacy Policy</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title text-white">Privacy Policy</h1>
+      <p class="page-hero__subtitle">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <article class="policy-content">
+    <div class="container container--narrow">
+
+      <p class="policy-intro">
+        This Privacy Policy explains how Start Strong ("<strong>we</strong>", "<strong>us</strong>")
+        collects, uses and protects information when you visit this website.
+        We are committed to handling any data collected through this website responsibly.
+      </p>
+
+      <section class="policy-section">
+        <h2>1. Who We Are</h2>
+        <p>
+          Start Strong is an independent running and fitness information website.
+          It is not affiliated with any commercial sportswear brand or organisation.
+          For questions about this policy, please <a href={`${base}contact/`}>contact us</a>.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>2. What Information We Collect</h2>
+        <h3>Analytics Data</h3>
+        <p>
+          With your consent, we use <strong>Google Analytics 4 (GA4)</strong> to collect
+          anonymous usage data about how visitors use this website. This may include:
+        </p>
+        <ul>
+          <li>Pages visited and time spent on each page</li>
+          <li>Approximate geographic location (country and region level)</li>
+          <li>Device type, operating system and browser</li>
+          <li>Traffic source (how you arrived at the website)</li>
+          <li>Interactions with buttons, links and site features</li>
+        </ul>
+        <p>
+          <strong>Google Analytics does not collect personally identifiable information</strong>
+          such as your name, email address or precise location. Google Analytics 4 anonymises
+          IP addresses by default before any data is stored.
+        </p>
+        <h3>Contact Communications</h3>
+        <p>
+          If you contact us by email, we will retain your message and email address
+          for the purpose of responding to your enquiry. This information is not shared
+          with third parties.
+        </p>
+        <h3>Browser Storage</h3>
+        <p>
+          We use browser <strong>localStorage</strong> to remember your analytics preference.
+          This includes:
+        </p>
+        <ul>
+          <li>
+            <strong>Consent preference (<code>ss_analytics_consent</code>):</strong> Stores
+            whether you accepted or declined analytics tracking, so you are not asked again
+            on every visit. This is stored in your browser's localStorage — not as a browser
+            cookie — and is never transmitted to any server.
+          </li>
+        </ul>
+        <p>
+          If Google Analytics is enabled and you accept analytics, Google Analytics will set
+          its own cookies (<code>_ga</code>, <code>_ga_*</code>) in your browser to distinguish
+          returning visitors. These cookies are only set after you give consent.
+        </p>
+        <p>
+          We do not use advertising cookies, tracking pixels for ad retargeting,
+          or any cookies that build user profiles for commercial purposes.
+        </p>
+        <h3>Google Fonts</h3>
+        <p>
+          This website uses Google Fonts (Poppins and Inter) to display text. Fonts are
+          loaded from <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>
+          on every page visit, including before any analytics consent is given. This request
+          may log your IP address on Google's servers according to
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.
+          This is independent of the analytics consent banner.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>3. How We Use This Information</h2>
+        <p>Analytics data is used solely to:</p>
+        <ul>
+          <li>Understand which content is useful to visitors</li>
+          <li>Identify technical issues with the website</li>
+          <li>Improve website structure and navigation</li>
+          <li>Measure the performance of content and digital marketing efforts</li>
+        </ul>
+        <p>We do not sell, rent or share analytics data with third parties for marketing purposes.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>4. Legal Basis for Processing</h2>
+        <p>
+          We rely on <strong>consent</strong> as our legal basis for processing analytics data.
+          You are asked to consent or decline analytics tracking through the cookie consent
+          banner when you first visit the site. You can change or withdraw your consent at
+          any time by clicking the <strong>"Manage cookie settings"</strong> link in the
+          website footer, or by clearing your browser's localStorage for this website.
+        </p>
+        <p>
+          Contact communications are processed on the basis of <strong>legitimate interests</strong>
+          — specifically our interest in responding to visitor enquiries.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>5. Third-Party Services</h2>
+        <p>We use the following third-party services:</p>
+        <div class="third-party-table">
+          {[
+            { service: 'Google Analytics 4', purpose: 'Anonymous website usage measurement', dataPolicy: 'https://policies.google.com/privacy' },
+            { service: 'Google Fonts', purpose: 'Serving web fonts (Poppins and Inter) — loaded on every page, before analytics consent', dataPolicy: 'https://policies.google.com/privacy' },
+            { service: 'GitHub Pages', purpose: 'Website hosting', dataPolicy: 'https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement' },
+          ].map(row => (
+            <div class="third-party-row">
+              <div>
+                <strong>{row.service}</strong>
+                <p>{row.purpose}</p>
+              </div>
+              <a href={row.dataPolicy} target="_blank" rel="noopener noreferrer" class="policy-link">
+                Privacy Policy ↗
+              </a>
+            </div>
+          ))}
+        </div>
+        <p>
+          Social sharing buttons on article pages link to Twitter/X and Facebook.
+          Clicking these links opens the third-party platform, which may then
+          collect information according to their own privacy policies.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>6. Data Retention</h2>
+        <p>
+          Google Analytics retains data according to the retention settings configured
+          in the GA4 account (typically 14 months by default for event-level data).
+          Contact email correspondence is retained only as long as necessary to resolve
+          the enquiry.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>7. Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+          <li><strong>Withdraw consent</strong> for analytics at any time by clicking "Manage cookie settings" in the footer, or by clearing your browser's localStorage for this website.</li>
+          <li><strong>Request information</strong> about any personal data we hold about you.</li>
+          <li><strong>Request deletion</strong> of personal data you have provided through email contact.</li>
+          <li><strong>Opt out of Google Analytics</strong> across all websites using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>.</li>
+        </ul>
+        <p>
+          Because Google Analytics data is anonymised, it cannot be attributed to or
+          deleted for a specific individual.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>8. Google Search Console</h2>
+        <p>
+          We use Google Search Console to monitor how the website appears in Google
+          Search results. This service does not collect personal data about visitors.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>9. External Links</h2>
+        <p>
+          Start Strong may link to external websites. We are not responsible for
+          the content or privacy practices of those websites. You should review
+          the privacy policies of any external sites you visit.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>10. Children's Privacy</h2>
+        <p>
+          Start Strong is not directed at children under the age of 13.
+          We do not knowingly collect personal information from children.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>11. Changes to This Policy</h2>
+        <p>
+          This policy may be updated when our practices change or when relevant
+          legal requirements change. The date at the top of this page reflects
+          when it was last revised. We encourage you to review this page periodically.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>12. Contact</h2>
+        <p>
+          If you have questions or concerns about this Privacy Policy, please
+          <a href={`${base}contact/`}>contact us</a>.
+        </p>
+      </section>
+
+    </div>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .page-hero { padding-block: var(--space-3xl); }
+  .breadcrumb { margin-bottom: var(--space-lg); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-xs); list-style: none; padding: 0; margin: 0; font-size: 0.85rem; }
+  .breadcrumb--light a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .breadcrumb--light a:hover { color: var(--color-orange); }
+  .breadcrumb--light li:last-child { color: rgba(255,255,255,0.4); }
+  .page-hero__title { font-size: clamp(1.75rem, 4vw, 2.75rem); margin-bottom: var(--space-sm); }
+  .page-hero__subtitle { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin: 0; }
+
+  .policy-content { padding-block: var(--space-4xl); }
+  .policy-intro { font-size: 1.05rem; color: var(--color-grey-dark); border-left: 4px solid var(--color-orange); padding-left: var(--space-lg); margin-bottom: var(--space-3xl); line-height: 1.75; }
+
+  .policy-section { margin-bottom: var(--space-3xl); }
+  .policy-section h2 { margin-bottom: var(--space-lg); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--color-grey-light); font-size: 1.35rem; }
+  .policy-section h3 { margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1.1rem; }
+  .policy-section p { color: var(--color-grey-dark); line-height: 1.75; }
+  .policy-section ul { color: var(--color-grey-dark); line-height: 1.75; }
+  .policy-section li { margin-bottom: var(--space-sm); }
+  .policy-section code { background: var(--color-grey-light); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; }
+
+  .third-party-table { border: 1px solid var(--color-grey-light); border-radius: var(--border-radius); overflow: hidden; margin-block: var(--space-lg); }
+  .third-party-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-lg); padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--color-grey-light);
+    font-size: 0.875rem;
+  }
+  .third-party-row:last-child { border-bottom: none; }
+  .third-party-row p { margin: 0; color: var(--color-grey); font-size: 0.85rem; }
+  .policy-link { color: var(--color-orange); white-space: nowrap; font-size: 0.85rem; }
+</style>

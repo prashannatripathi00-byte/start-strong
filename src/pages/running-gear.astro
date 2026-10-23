@@ -1,0 +1,398 @@
+---
+// running-gear.astro — Running equipment education guide
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Running Gear Guide — What Beginners Actually Need"
+  description="An honest guide to running gear for beginners. Learn what equipment matters, how to choose running shoes, and what you can skip — without spending a fortune."
+>
+
+  <!-- Page Hero -->
+  <section class="page-hero bg-dark">
+    <div class="container">
+      <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
+        <ol role="list">
+          <li><a href={base}>Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">Running Gear</li>
+        </ol>
+      </nav>
+      <span class="page-hero__eyebrow">Equipment Guide</span>
+      <h1 class="page-hero__title text-white">Running Gear for Beginners</h1>
+      <p class="page-hero__subtitle">
+        An honest guide to what matters, what to look for, and what you
+        can safely skip when you're just starting out.
+      </p>
+    </div>
+  </section>
+
+  <!-- Affiliate Disclosure -->
+  <div class="disclosure-banner">
+    <div class="container">
+      <p>
+        <strong>Disclosure:</strong> Start Strong may earn a commission through affiliate links in future.
+        Where this applies, it will be clearly indicated. All content reflects genuine editorial
+        recommendations — no brand has paid for inclusion in this guide.
+        <a href={`${base}about/#affiliate-disclosure`}>Read our full affiliate policy.</a>
+      </p>
+    </div>
+  </div>
+
+  <article class="gear-content">
+    <div class="container">
+
+      <!-- Table of contents -->
+      <nav class="toc" aria-label="Page contents" style="margin-bottom:var(--space-3xl)">
+        <h2 class="toc__heading">In This Guide</h2>
+        <ol class="toc__list">
+          <li><a href="#running-shoes">Running Shoes — The Most Important Choice</a></li>
+          <li><a href="#running-clothing">Running Clothing</a></li>
+          <li><a href="#essential-extras">Essential Beginner Extras</a></li>
+          <li><a href="#nice-to-have">Nice-to-Have (Not Essential)</a></li>
+          <li><a href="#gear-comparison">How to Compare and Choose</a></li>
+          <li><a href="#budget">Gear on a Budget</a></li>
+        </ol>
+      </nav>
+
+      <!-- Section: Shoes -->
+      <section id="running-shoes" class="gear-section">
+        <h2>Running Shoes — The Most Important Choice</h2>
+        <p>
+          The single piece of equipment that makes the most meaningful difference to
+          a beginner runner is a pair of properly fitting running shoes. Unlike general
+          trainers or fashion athletic shoes, running shoes are engineered to support
+          the specific demands of forward-motion running over extended distances.
+        </p>
+
+        <h3>What to Look For</h3>
+        <div class="criteria-grid">
+          {[
+            { criterion: 'Fit', detail: 'Your longest toe should have approximately a thumb\'s width of space from the shoe end. The heel should be secure without slipping. Width matters — don\'t just check length.' },
+            { criterion: 'Cushioning', detail: 'Beginners typically benefit from moderate to high cushioning as it reduces impact stress while your body adapts to running. Neither extreme is universally best.' },
+            { criterion: 'Drop', detail: 'Heel-to-toe drop is the height difference between heel and forefoot. Beginners transitioning from standard footwear are usually comfortable with 8–12mm drop.' },
+            { criterion: 'Weight', detail: 'Lighter shoes are faster but typically offer less cushioning. For training purposes, prioritise comfort and support over shoe weight.' },
+            { criterion: 'Breathability', detail: 'Mesh uppers improve airflow and reduce overheating, particularly important for longer runs and warmer conditions.' },
+            { criterion: 'Purpose', detail: 'Road shoes are firmer and intended for pavement. Trail shoes have deeper lugs for grip on off-road surfaces. Most beginners start on roads.' },
+          ].map(item => (
+            <div class="criterion-card">
+              <h4 class="criterion-card__label">{item.criterion}</h4>
+              <p class="criterion-card__detail">{item.detail}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="info-box">
+          <strong>💡 Recommendation:</strong> Visit a specialist running shop for a gait analysis fitting if possible.
+          Staff can observe how your foot moves and recommend suitable options. This is often a free service
+          and is considerably more useful than selecting shoes purely based on online reviews or appearance.
+        </div>
+
+        <h3>Fit Across Brands</h3>
+        <p>
+          Shoe fit varies meaningfully between brands. A specific size in one brand
+          may run narrower, wider, shorter or longer in another. Always try shoes on
+          — or buy from a retailer with a generous return policy if purchasing online.
+        </p>
+
+        <div class="info-box">
+          <strong>⚠️ Editorial Note:</strong> Start Strong does not rank or recommend specific shoe models
+          because suitability is highly individual. What works for one runner may not work for another.
+          A shoe recommended in a review may be discontinued, updated or simply wrong for your foot shape.
+        </div>
+      </section>
+
+      <!-- Section: Clothing -->
+      <section id="running-clothing" class="gear-section">
+        <h2>Running Clothing</h2>
+        <p>
+          Running clothing does not need to be expensive, but fabric choice has a
+          practical impact on comfort, particularly on longer runs or in warm weather.
+        </p>
+
+        <h3>Key Clothing Principles</h3>
+        <div class="clothing-grid">
+          {[
+            {
+              item: 'Tops',
+              icon: '👕',
+              advice: 'Choose moisture-wicking synthetic fabric (polyester or nylon blends). These draw sweat away from the skin and dry quickly. Avoid standard cotton — it retains moisture and can cause chafing on longer runs.',
+            },
+            {
+              item: 'Shorts or Tights',
+              icon: '🩳',
+              advice: 'Running shorts or tights with a secure waistband and inner liner reduce friction. Compression tights can provide muscle support. Loose shorts work well for shorter distances.',
+            },
+            {
+              item: 'Running Socks',
+              icon: '🧦',
+              advice: 'Running-specific socks use moisture-wicking materials and strategic padding at pressure points. They reduce blister risk significantly compared with standard cotton socks.',
+            },
+            {
+              item: 'Sports Bra',
+              icon: '🩱',
+              advice: 'For women runners, appropriate support is important across all distances. Fit should allow deep breathing without excessive movement. Replace regularly as elastic wears out over time.',
+            },
+            {
+              item: 'Jacket/Gilet',
+              icon: '🧥',
+              advice: 'A lightweight, packable running jacket is useful in changeable weather. Look for wind and water resistance. A high-visibility gilet is practical for low-light conditions.',
+            },
+            {
+              item: 'Hat/Cap',
+              icon: '🧢',
+              advice: 'A lightweight running cap offers sun protection and shields eyes from rain. In cold weather, a thermal hat or buff retains warmth without overheating.',
+            },
+          ].map(item => (
+            <div class="clothing-card">
+              <span class="clothing-card__icon" aria-hidden="true">{item.icon}</span>
+              <div>
+                <h4 class="clothing-card__item">{item.item}</h4>
+                <p class="clothing-card__advice">{item.advice}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section: Essentials -->
+      <section id="essential-extras" class="gear-section">
+        <h2>Essential Beginner Extras</h2>
+
+        <div class="extras-list">
+          {[
+            {
+              item: 'Phone or Running Watch',
+              priority: 'Essential',
+              reason: 'Tracking distance, time and pace gives you measurable progress data. A smartphone with a free running app (such as Nike Run Club, Strava or Runkeeper) works well. A GPS running watch is an upgrade for later.',
+            },
+            {
+              item: 'Running App',
+              priority: 'Essential',
+              reason: 'Free apps provide GPS tracking, guided workouts and performance history. Seeing logged sessions helps build a running habit. Popular free options include Strava and Nike Run Club.',
+            },
+            {
+              item: 'Water Bottle',
+              priority: 'Important',
+              reason: 'For runs under 30 minutes, hydrating before and after is typically sufficient. For longer sessions, handheld bottles or hydration vests become relevant.',
+            },
+            {
+              item: 'Anti-Chafe Product',
+              priority: 'Important',
+              reason: 'Body Glide or similar products reduce friction at common chafe points (inner thighs, underarms, under sports bra straps). A small investment that prevents significant discomfort on longer runs.',
+            },
+            {
+              item: 'High-Visibility Gear',
+              priority: 'Important',
+              reason: 'Reflective strips, a flashing clip-on light or a high-vis vest significantly improve safety when running in low-light conditions.',
+            },
+          ].map(extra => (
+            <div class="extra-item">
+              <div class="extra-item__header">
+                <h4 class="extra-item__name">{extra.item}</h4>
+                <span class={`priority-badge priority-badge--${extra.priority.toLowerCase()}`}>{extra.priority}</span>
+              </div>
+              <p class="extra-item__reason">{extra.reason}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section: Nice to have -->
+      <section id="nice-to-have" class="gear-section">
+        <h2>Nice-to-Have (Not Essential)</h2>
+        <p>
+          The following items can enhance the running experience but are not required
+          to start running effectively:
+        </p>
+        <ul class="optional-list">
+          <li><strong>GPS Running Watch:</strong> Accurate pacing and heart rate data. Useful once you are training consistently, but a phone works fine initially.</li>
+          <li><strong>Heart Rate Monitor:</strong> Supports training by effort level. Relevant for more structured training.</li>
+          <li><strong>Foam Roller:</strong> Supports muscle recovery. Useful once you are running regularly.</li>
+          <li><strong>Hydration Vest:</strong> Practical for runs exceeding 60–90 minutes. Not relevant at the beginner stage.</li>
+          <li><strong>Running Headphones:</strong> Wireless earbuds allow music or podcast listening. Be aware of your surroundings — keep volume low in traffic.</li>
+          <li><strong>Compression Socks:</strong> Some runners find them supportive for recovery. Evidence is mixed.</li>
+        </ul>
+      </section>
+
+      <!-- Section: Comparison criteria -->
+      <section id="gear-comparison" class="gear-section">
+        <h2>How to Compare and Choose</h2>
+        <p>
+          When evaluating any piece of running equipment, apply these practical criteria:
+        </p>
+        <div class="comparison-table">
+          <div class="comparison-table__row comparison-table__row--header">
+            <span>Question to Ask</span>
+            <span>Why It Matters</span>
+          </div>
+          {[
+            ['Does it fit correctly?', 'Poor fit causes discomfort and injury. Correct fit is the highest priority.'],
+            ['Does it suit the conditions I run in?', 'Road vs. trail, warm vs. cold weather affect the right choice.'],
+            ['Will it last with regular use?', 'Running shoes typically last 500–800 km. Quality construction matters.'],
+            ['Has it been reviewed by actual runners?', 'Runner-focused reviews are more useful than general product descriptions.'],
+            ['Can I return it if it doesn\'t work for me?', 'A generous return policy matters, particularly for online shoe purchases.'],
+            ['Do I need it right now?', 'Start minimal. Add equipment when a genuine need becomes clear.'],
+          ].map(([question, reason]) => (
+            <div class="comparison-table__row">
+              <span>{question}</span>
+              <span>{reason}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section: Budget -->
+      <section id="budget" class="gear-section">
+        <h2>Gear on a Budget</h2>
+        <p>
+          Starting running does not require significant financial investment. Here is a
+          realistic minimum-spend approach:
+        </p>
+        <ul>
+          <li><strong>Running shoes:</strong> The one area where some investment is worthwhile. Previous-season models or mid-range options from reputable brands offer good performance at a lower price than flagship models.</li>
+          <li><strong>Clothing:</strong> Many high-street supermarkets and discount sports retailers sell adequate moisture-wicking running tops and shorts at low cost.</li>
+          <li><strong>Tracking:</strong> A free running app on your existing smartphone costs nothing.</li>
+          <li><strong>Reflective gear:</strong> Clip-on LED lights and reflective armbands are inexpensive and widely available.</li>
+        </ul>
+        <p>
+          As you commit to running and your training progresses, specific needs will become
+          clear. Invest in equipment when a genuine need is identified, not in anticipation
+          of a need that may not materialise.
+        </p>
+      </section>
+
+    </div>
+  </article>
+
+  <CTASection
+    heading="Start Your Running Journey"
+    subtext="Gear guidance checked. Now it's time to get out the door."
+    primaryLabel="Beginner Running Guide"
+    primaryHref="start-running/"
+    secondaryLabel="Read the Blog"
+    secondaryHref="blog/"
+    gaLabel="gear_page_bottom"
+  />
+
+</BaseLayout>
+
+<style>
+  /* Page hero */
+  .page-hero { padding-block: var(--space-4xl); }
+  .page-hero__content { max-width: 700px; }
+  .breadcrumb { margin-bottom: var(--space-lg); }
+  .breadcrumb ol {
+    display: flex; align-items: center; gap: var(--space-xs);
+    list-style: none; padding: 0; margin: 0; font-size: 0.85rem;
+  }
+  .breadcrumb--light a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .breadcrumb--light a:hover { color: var(--color-orange); }
+  .breadcrumb--light li:last-child { color: rgba(255,255,255,0.4); }
+  .page-hero__eyebrow {
+    display: block; font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-orange); margin-bottom: var(--space-sm);
+  }
+  .page-hero__title { font-size: clamp(2rem, 5vw, 3.25rem); margin-bottom: var(--space-lg); }
+  .page-hero__subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0; line-height: 1.65; }
+
+  /* Disclosure */
+  .disclosure-banner {
+    background: rgba(255,107,53,0.07);
+    border-bottom: 1px solid rgba(255,107,53,0.2);
+    padding-block: var(--space-md);
+  }
+  .disclosure-banner p { font-size: 0.85rem; color: var(--color-grey-dark); margin: 0; }
+  .disclosure-banner a { color: var(--color-orange); }
+
+  /* TOC */
+  .toc {
+    background: var(--color-ivory); border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg); padding: var(--space-xl);
+  }
+  .toc__heading { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-grey); margin-bottom: var(--space-md); }
+  .toc__list { padding-left: var(--space-lg); margin: 0; }
+  .toc__list li { margin-bottom: var(--space-xs); }
+  .toc__list a { font-size: 0.9rem; color: var(--color-grey-dark); text-decoration: none; font-weight: 500; }
+  .toc__list a:hover { color: var(--color-orange); }
+
+  /* Content */
+  .gear-content { padding-block: var(--space-3xl); }
+  .gear-section { margin-bottom: var(--space-4xl); max-width: var(--max-width-text); }
+  .gear-section h2 { margin-bottom: var(--space-lg); padding-bottom: var(--space-sm); border-bottom: 2px solid var(--color-grey-light); }
+  .gear-section h3 { margin-top: var(--space-xl); margin-bottom: var(--space-md); }
+  .gear-section p  { color: var(--color-grey-dark); line-height: 1.75; }
+
+  /* Info box */
+  .info-box {
+    background-color: var(--color-ivory); border: 1px solid var(--color-grey-light);
+    border-left: 4px solid var(--color-orange); border-radius: var(--border-radius);
+    padding: var(--space-lg); margin-block: var(--space-xl); font-size: 0.9rem; line-height: 1.65; color: var(--color-grey-dark);
+  }
+
+  /* Criteria grid */
+  .criteria-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md);
+    margin-block: var(--space-xl);
+  }
+  .criterion-card {
+    background: var(--color-ivory); border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius); padding: var(--space-lg);
+  }
+  .criterion-card__label { font-size: 1rem; margin-bottom: var(--space-xs); }
+  .criterion-card__detail { font-size: 0.875rem; color: var(--color-grey); line-height: 1.55; margin: 0; }
+
+  /* Clothing */
+  .clothing-grid { display: flex; flex-direction: column; gap: var(--space-md); margin-block: var(--space-xl); }
+  .clothing-card {
+    display: flex; gap: var(--space-lg); align-items: flex-start;
+    background: var(--color-ivory); border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius); padding: var(--space-lg);
+  }
+  .clothing-card__icon { font-size: 2rem; flex-shrink: 0; }
+  .clothing-card__item { font-size: 1rem; margin-bottom: var(--space-xs); }
+  .clothing-card__advice { font-size: 0.875rem; color: var(--color-grey); line-height: 1.55; margin: 0; }
+
+  /* Extras */
+  .extras-list { display: flex; flex-direction: column; gap: var(--space-md); margin-block: var(--space-xl); }
+  .extra-item {
+    background: var(--color-white); border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius); padding: var(--space-lg);
+  }
+  .extra-item__header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); margin-bottom: var(--space-sm); flex-wrap: wrap; }
+  .extra-item__name { font-size: 1rem; }
+  .extra-item__reason { font-size: 0.875rem; color: var(--color-grey); line-height: 1.55; margin: 0; }
+
+  .priority-badge {
+    padding: 0.2rem 0.65rem; font-family: var(--font-heading); font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 50px;
+  }
+  .priority-badge--essential { background: rgba(255,107,53,0.12); color: var(--color-orange-dark); }
+  .priority-badge--important { background: rgba(100,116,139,0.1); color: var(--color-grey); }
+
+  /* Optional list */
+  .optional-list { color: var(--color-grey-dark); }
+  .optional-list li { margin-bottom: var(--space-sm); }
+
+  /* Comparison table */
+  .comparison-table { margin-block: var(--space-xl); border: 1px solid var(--color-grey-light); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .comparison-table__row {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-lg); padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--color-grey-light);
+    font-size: 0.875rem; color: var(--color-grey-dark);
+  }
+  .comparison-table__row:last-child { border-bottom: none; }
+  .comparison-table__row--header {
+    background: var(--color-ivory); font-family: var(--font-heading);
+    font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-grey);
+  }
+
+  @media (max-width: 768px) {
+    .criteria-grid { grid-template-columns: 1fr; }
+    .comparison-table__row { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+// CTASection.astro — reusable call-to-action block
+interface Props {
+  heading?: string;
+  subtext?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  dark?: boolean;
+  gaLabel?: string;
+}
+
+const {
+  heading    = 'Start Your Running Journey Today',
+  subtext    = 'Practical guides, training plans and gear advice — all free, all beginner-friendly.',
+  primaryLabel   = 'Start Running',
+  primaryHref    = '/start-running/',
+  secondaryLabel = 'Explore the Blog',
+  secondaryHref  = '/blog/',
+  dark = true,
+  gaLabel = 'cta_section',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+---
+
+<section class={`cta-section section--sm ${dark ? 'bg-dark' : 'bg-ivory'}`}>
+  <div class="container text-center">
+    <h2 class={dark ? 'text-white' : ''} style="margin-bottom:var(--space-md)">{heading}</h2>
+    {subtext && (
+      <p style={`${dark ? 'color:rgba(255,255,255,0.7);' : 'color:var(--color-grey);'} margin-bottom:var(--space-xl); max-width:520px; margin-inline:auto;`}>
+        {subtext}
+      </p>
+    )}
+    <div class="cta-section__buttons">
+      <a
+        href={`${base}${primaryHref.replace(/^\//, '')}`}
+        class="btn btn--primary btn--lg"
+        data-ga-cta={`${gaLabel}_primary`}
+      >
+        {primaryLabel}
+      </a>
+      {secondaryLabel && (
+        <a
+          href={`${base}${secondaryHref.replace(/^\//, '')}`}
+          class={`btn btn--lg ${dark ? 'btn--outline-white' : 'btn--secondary'}`}
+          data-ga-cta={`${gaLabel}_secondary`}
+        >
+          {secondaryLabel}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section__buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-ga-cta]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const label = (btn as HTMLElement).dataset.gaCta;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'cta_click', {
+          event_category: 'CTA',
+          event_label: label,
+        });
+      }
+    });
+  });
+</script>

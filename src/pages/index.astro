@@ -1,0 +1,594 @@
+---
+// Homepage — index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import CTASection from '../components/CTASection.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+// Fetch featured + latest posts
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPosts = allPosts.filter(p => p.data.featured).slice(0, 3);
+const latestPosts   = allPosts.slice(0, 3);
+const displayPosts  = featuredPosts.length >= 3 ? featuredPosts : latestPosts;
+
+const categories = [
+  {
+    slug: 'beginner-running',
+    label: 'Beginner Running',
+    icon: '🏃',
+    description: 'Everything you need to go from your couch to your first 5K.',
+  },
+  {
+    slug: 'training-and-fitness',
+    label: 'Training & Fitness',
+    icon: '💪',
+    description: 'Training plans, strength work and recovery strategies.',
+  },
+  {
+    slug: 'running-gear',
+    label: 'Running Gear',
+    icon: '👟',
+    description: 'Honest guidance on shoes, clothing and essential equipment.',
+  },
+  {
+    slug: 'motivation-and-lifestyle',
+    label: 'Motivation & Lifestyle',
+    icon: '🌟',
+    description: 'Build the habits and mindset that keep you running.',
+  },
+];
+---
+
+<BaseLayout
+  title="Your Running Journey Starts Here"
+  description="Start Strong is your beginner-friendly running guide. Discover practical running tips, training plans, gear reviews and the motivation to take your first step."
+>
+
+  <!-- ======================== HERO ======================== -->
+  <section class="hero" aria-label="Welcome to Start Strong">
+    <div class="hero__backdrop" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <div class="hero__text">
+        <p class="hero__eyebrow">Start Strong · Your Running Journey Starts Here</p>
+        <h1 class="hero__heading">
+          Every Great Runner<br/>
+          <span class="hero__heading--accent">Starts Somewhere.</span>
+        </h1>
+        <p class="hero__subtext">
+          Discover practical running advice, beginner training guides and
+          the motivation to take your first step.
+        </p>
+        <div class="hero__buttons">
+          <a
+            href={`${base}start-running/`}
+            class="btn btn--primary btn--lg"
+            data-ga-cta="hero_start_running"
+          >
+            Start Running
+          </a>
+          <a
+            href={`${base}blog/`}
+            class="btn btn--outline-white btn--lg"
+            data-ga-cta="hero_explore_blog"
+          >
+            Explore the Blog
+          </a>
+        </div>
+      </div>
+      <div class="hero__stats" aria-label="Key facts about Start Strong">
+        <div class="hero__stat">
+          <span class="hero__stat-number">4+</span>
+          <span class="hero__stat-label">Expert Guides</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number">100%</span>
+          <span class="hero__stat-label">Free Content</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number">4 Weeks</span>
+          <span class="hero__stat-label">Beginner Plan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== VALUE PROPOSITION ======================== -->
+  <section class="section--sm bg-ivory" aria-label="Why Start Strong">
+    <div class="container">
+      <div class="value-grid">
+        <div class="value-item">
+          <div class="value-icon" aria-hidden="true">📖</div>
+          <h3 class="value-title">Beginner-Friendly</h3>
+          <p class="value-text">No jargon. No experience required. Just practical advice that works from day one.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon" aria-hidden="true">✅</div>
+          <h3 class="value-title">Evidence-Based</h3>
+          <p class="value-text">Our content is grounded in established running and fitness principles. We tell you where information comes from.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon" aria-hidden="true">🆓</div>
+          <h3 class="value-title">Completely Free</h3>
+          <p class="value-text">All guides, training plans and gear advice are freely accessible. No subscription required.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon" aria-hidden="true">📱</div>
+          <h3 class="value-title">Works Everywhere</h3>
+          <p class="value-text">Read on your phone, tablet or desktop — before, during or after your run.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FEATURED GUIDE ======================== -->
+  <section class="section featured-guide" aria-label="Start Running guide">
+    <div class="container">
+      <div class="featured-guide__inner">
+        <div class="featured-guide__text">
+          <span class="section-header__eyebrow">Featured Guide</span>
+          <h2>Your 4-Week Beginner<br/>Running Plan</h2>
+          <p>
+            Never run before? No problem. Our structured four-week plan takes you
+            from walking to running confidently — at your own pace, on your own schedule.
+          </p>
+          <ul class="guide-highlights">
+            <li>✔ Walk-to-run approach for true beginners</li>
+            <li>✔ Three sessions per week — under 30 minutes</li>
+            <li>✔ Warm-up, cool-down and recovery advice</li>
+            <li>✔ Motivation tips for tough days</li>
+          </ul>
+          <a href={`${base}start-running/`} class="btn btn--primary" data-ga-cta="featured_guide">
+            View the Full Plan →
+          </a>
+        </div>
+        <div class="featured-guide__visual" aria-hidden="true">
+          <div class="week-cards">
+            {['Week 1', 'Week 2', 'Week 3', 'Week 4'].map((w, i) => (
+              <div class="week-card" style={`--delay:${i * 0.1}s`}>
+                <span class="week-card__label">{w}</span>
+                <span class="week-card__desc">{
+                  i === 0 ? 'Walk 4 min / Run 1 min' :
+                  i === 1 ? 'Walk 3 min / Run 2 min' :
+                  i === 2 ? 'Walk 1 min / Run 4 min' :
+                            'Run 20–25 min continuously'
+                }</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CATEGORIES ======================== -->
+  <section class="section bg-ivory" aria-label="Content categories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__eyebrow">Explore Topics</span>
+        <h2 class="section-header__title">Find What You're Looking For</h2>
+        <p class="section-header__subtitle">
+          From your very first run to staying motivated for the long term.
+        </p>
+      </div>
+      <div class="categories-grid">
+        {categories.map(cat => (
+          <a
+            href={`${base}blog/?category=${cat.slug}`}
+            class="category-card"
+            data-ga-cta={`category_${cat.slug}`}
+          >
+            <span class="category-card__icon" aria-hidden="true">{cat.icon}</span>
+            <h3 class="category-card__label">{cat.label}</h3>
+            <p class="category-card__desc">{cat.description}</p>
+            <span class="category-card__arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== BLOG POSTS ======================== -->
+  <section class="section" aria-label="Latest articles">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__eyebrow">From the Blog</span>
+        <h2 class="section-header__title">Latest Running Advice</h2>
+        <p class="section-header__subtitle">
+          Practical, readable articles to help you run better.
+        </p>
+      </div>
+      {displayPosts.length > 0 ? (
+        <div class="grid-3">
+          {displayPosts.map(post => (
+            <ArticleCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <div class="posts-placeholder">
+          <p>Articles are coming soon. Check back shortly.</p>
+        </div>
+      )}
+      <div class="section-footer text-center" style="margin-top:var(--space-3xl)">
+        <a href={`${base}blog/`} class="btn btn--secondary btn--lg">View All Articles →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== GEAR HIGHLIGHT ======================== -->
+  <section class="section bg-ivory gear-highlight" aria-label="Running gear overview">
+    <div class="container">
+      <div class="gear-highlight__inner">
+        <div class="gear-highlight__text">
+          <span class="section-header__eyebrow">Running Gear</span>
+          <h2>Don't Let Gear Hold You Back</h2>
+          <p>
+            You don't need expensive equipment to start running. But the right shoes
+            can make a significant difference to comfort and injury risk. Our gear
+            guides help you make informed decisions without the pressure.
+          </p>
+          <a href={`${base}running-gear/`} class="btn btn--primary" data-ga-cta="homepage_gear">
+            Explore Gear Guides →
+          </a>
+        </div>
+        <div class="gear-highlight__items" aria-hidden="true">
+          {[
+            { icon: '👟', label: 'Running Shoes' },
+            { icon: '🩺', label: 'Injury Prevention' },
+            { icon: '👕', label: 'Running Clothing' },
+            { icon: '⌚', label: 'Useful Extras' },
+          ].map(item => (
+            <div class="gear-item">
+              <span class="gear-item__icon">{item.icon}</span>
+              <span class="gear-item__label">{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FINAL CTA ======================== -->
+  <CTASection
+    heading="Your First Run Is Closer Than You Think"
+    subtext="Practical advice and simple steps — everything you need to start running with confidence."
+    primaryLabel="Start Running Now"
+    primaryHref="start-running/"
+    secondaryLabel="Read the Blog"
+    secondaryHref="blog/"
+    gaLabel="homepage_bottom"
+  />
+
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-dark);
+    overflow: hidden;
+  }
+
+  .hero__backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(255,107,53,0.18) 0%, transparent 60%),
+                linear-gradient(135deg, #172025 0%, #0d1518 100%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--space-4xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .hero__text { max-width: 640px; }
+
+  .hero__eyebrow {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-orange);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero__heading {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1.1;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero__heading--accent { color: var(--color-orange); }
+
+  .hero__subtext {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    margin-bottom: var(--space-xl);
+    line-height: 1.7;
+  }
+
+  .hero__buttons {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* Stats */
+  .hero__stats {
+    display: flex;
+    gap: var(--space-3xl);
+    flex-wrap: wrap;
+  }
+
+  .hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero__stat-number {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-orange);
+    line-height: 1;
+  }
+
+  .hero__stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  /* ---- Value grid ---- */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .value-item {
+    text-align: center;
+    padding: var(--space-lg);
+  }
+
+  .value-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+    display: block;
+  }
+
+  .value-title {
+    font-size: 1rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .value-text {
+    font-size: 0.875rem;
+    color: var(--color-grey);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ---- Featured guide ---- */
+  .featured-guide__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .featured-guide__text h2 {
+    margin-bottom: var(--space-lg);
+    margin-top: var(--space-sm);
+  }
+
+  .featured-guide__text p {
+    color: var(--color-grey);
+    margin-bottom: var(--space-lg);
+  }
+
+  .guide-highlights {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--space-xl);
+  }
+
+  .guide-highlights li {
+    padding: var(--space-xs) 0;
+    font-size: 0.95rem;
+    color: var(--color-grey-dark);
+  }
+
+  /* Week cards */
+  .week-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .week-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .week-card:hover {
+    border-color: var(--color-orange);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .week-card__label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-orange);
+  }
+
+  .week-card__desc {
+    font-size: 0.875rem;
+    color: var(--color-grey-dark);
+    line-height: 1.4;
+  }
+
+  /* ---- Categories ---- */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .category-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-decoration: none;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+
+  .category-card:hover {
+    border-color: var(--color-orange);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .category-card__icon {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .category-card__label {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 0;
+  }
+
+  .category-card__desc {
+    font-size: 0.875rem;
+    color: var(--color-grey);
+    line-height: 1.55;
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .category-card__arrow {
+    font-size: 1.1rem;
+    color: var(--color-orange);
+    margin-top: auto;
+    font-weight: 700;
+    transition: transform var(--transition);
+  }
+
+  .category-card:hover .category-card__arrow {
+    transform: translateX(4px);
+  }
+
+  /* ---- Gear highlight ---- */
+  .gear-highlight__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .gear-highlight__text h2 { margin-bottom: var(--space-lg); margin-top: var(--space-sm); }
+  .gear-highlight__text p  { color: var(--color-grey); margin-bottom: var(--space-xl); }
+
+  .gear-highlight__items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .gear-item {
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .gear-item__icon { font-size: 2rem; }
+  .gear-item__label {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-dark);
+  }
+
+  .posts-placeholder {
+    text-align: center;
+    padding: var(--space-3xl);
+    background-color: var(--color-ivory);
+    border-radius: var(--border-radius-lg);
+    color: var(--color-grey);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .value-grid     { grid-template-columns: repeat(2, 1fr); }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-guide__inner,
+    .gear-highlight__inner { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { min-height: 75vh; }
+    .hero__stats { gap: var(--space-xl); }
+    .value-grid { grid-template-columns: 1fr; }
+    .categories-grid { grid-template-columns: 1fr 1fr; }
+    .week-cards { grid-template-columns: 1fr; }
+    .gear-highlight__items { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .categories-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Track hero CTA clicks
+  document.querySelectorAll('[data-ga-cta]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const label = (btn as HTMLElement).dataset.gaCta;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'cta_click', {
+          event_category: 'CTA',
+          event_label: label,
+        });
+      }
+    });
+  });
+</script>

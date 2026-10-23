@@ -1,0 +1,274 @@
+---
+// Footer.astro
+const base = import.meta.env.BASE_URL;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <!-- Brand column -->
+      <div class="footer__brand">
+        <a href={base} class="footer__logo" aria-label="Start Strong — Home">
+          <span class="logo-start">START</span><span class="logo-strong">STRONG</span>
+        </a>
+        <p class="footer__tagline">Your Running Journey Starts Here</p>
+        <p class="footer__description">
+          Practical running advice, beginner training guides and the motivation
+          to lace up and take your first step.
+        </p>
+        <!-- Social icons — shown as non-interactive decoration until real account
+             URLs are available. To activate: replace each <span> with an <a> tag
+             pointing to the real profile URL, e.g.:
+               <a href="https://instagram.com/startstrong" class="social-link" ...>
+             Then remove the aria-hidden and add the data-social attribute for GA tracking. -->
+        <div class="footer__social" aria-label="Find us on social media (coming soon)">
+          <span class="social-link social-link--inactive" aria-hidden="true" title="Instagram — coming soon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </span>
+          <span class="social-link social-link--inactive" aria-hidden="true" title="Facebook — coming soon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </span>
+          <span class="social-link social-link--inactive" aria-hidden="true" title="YouTube — coming soon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"></polygon>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="footer__column">
+        <h3 class="footer__heading">Explore</h3>
+        <ul class="footer__links" role="list">
+          <li><a href={`${base}start-running/`}>Start Running</a></li>
+          <li><a href={`${base}blog/`}>Blog</a></li>
+          <li><a href={`${base}running-gear/`}>Running Gear</a></li>
+          <li><a href={`${base}about/`}>About Us</a></li>
+          <li><a href={`${base}contact/`}>Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer__column">
+        <h3 class="footer__heading">Topics</h3>
+        <ul class="footer__links" role="list">
+          <li><a href={`${base}blog/?category=beginner-running`}>Beginner Running</a></li>
+          <li><a href={`${base}blog/?category=training-and-fitness`}>Training &amp; Fitness</a></li>
+          <li><a href={`${base}blog/?category=running-gear`}>Running Gear</a></li>
+          <li><a href={`${base}blog/?category=motivation-and-lifestyle`}>Motivation &amp; Lifestyle</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="footer__column">
+        <h3 class="footer__heading">Information</h3>
+        <ul class="footer__links" role="list">
+          <li><a href={`${base}privacy-policy/`}>Privacy Policy</a></li>
+          <li><a href={`${base}about/#editorial-standards`}>Editorial Standards</a></li>
+          <li><a href={`${base}about/#affiliate-disclosure`}>Affiliate Disclosure</a></li>
+          <li><a href={`${base}contact/`}>Get in Touch</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="footer__divider" />
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {currentYear} Start Strong. All rights reserved.
+        Not affiliated with or endorsed by any sportswear brand.
+      </p>
+      <p class="footer__disclaimer">
+        Content is for general information only. Always consult a healthcare professional
+        before beginning a new exercise programme.
+      </p>
+      <!-- cookie-settings-trigger is rendered by CookieConsent.astro and hidden
+           via JS when no GA ID is configured. We slot it into the footer here. -->
+      <p class="footer__cookie-settings" id="footer-cookie-settings-slot"></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-dark);
+    color: rgba(255,255,255,0.8);
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-3xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  /* Brand */
+  .footer__logo {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: var(--space-sm);
+  }
+  .logo-start   { color: var(--color-white); }
+  .logo-strong  { color: var(--color-orange); }
+
+  .footer__tagline {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-orange);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+  }
+
+  .footer__description {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Social */
+  .footer__social {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: background-color var(--transition), color var(--transition);
+  }
+
+  .social-link:hover {
+    background-color: var(--color-orange);
+    color: var(--color-white);
+  }
+
+  /* Placeholder state — non-interactive, visually dimmed */
+  .social-link--inactive {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Columns */
+  .footer__heading {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+  }
+
+  .footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__links a {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .footer__links a:hover {
+    color: var(--color-orange);
+  }
+
+  /* Divider */
+  .footer__divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: var(--space-xl);
+  }
+
+  /* Bottom */
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .footer__copyright,
+  .footer__disclaimer {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .footer__cookie-settings {
+    margin: 0;
+    min-height: 1.2em; /* reserve space so footer doesn't jump */
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    .footer__brand {
+      grid-column: auto;
+    }
+  }
+</style>
+
+<script>
+  // Social link click tracking — active once real <a> tags replace the placeholder spans.
+  // document.querySelectorAll('.social-link[data-social]').forEach(link => {
+  //   link.addEventListener('click', () => {
+  //     const platform = (link as HTMLElement).dataset.social;
+  //     if (typeof window.gtag === 'function') {
+  //       window.gtag('event', 'social_click', { event_category: 'Social Media', event_label: platform });
+  //     }
+  //   });
+  // });
+
+  // Move the cookie-settings-trigger (rendered by CookieConsent.astro) into
+  // the footer slot so it appears in context with the copyright block.
+  const slot = document.getElementById('footer-cookie-settings-slot');
+  const trigger = document.getElementById('cookie-settings-trigger');
+  if (slot && trigger) {
+    slot.appendChild(trigger);
+  }
+</script>

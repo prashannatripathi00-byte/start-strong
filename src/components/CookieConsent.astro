@@ -1,0 +1,250 @@
+---
+// CookieConsent.astro — GDPR-aware analytics consent banner with withdrawal UI.
+//
+// Behaviour:
+//   - If GA_MEASUREMENT_ID is empty (not configured), the banner is never shown
+//     and GA4 is never loaded. The "Manage cookie settings" button is also hidden.
+//   - If the user has previously granted consent, GA4 is loaded silently on page load.
+//   - If consent has been denied, nothing is loaded.
+//   - If no decision has been stored, the banner appears after a 1-second delay.
+//   - A "Manage cookie settings" link in the footer re-opens the banner so the
+//     user can change or withdraw their choice at any time.
+//
+// Consent is stored in browser localStorage under the key 'ss_analytics_consent'
+// with values 'granted' or 'denied'.
+const base = import.meta.env.BASE_URL;
+---
+
+<!-- Consent banner -->
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Cookie consent"
+  aria-live="polite"
+  class="hidden"
+>
+  <div class="cookie-banner__inner">
+    <p class="cookie-banner__text">
+      We use <strong>Google Analytics</strong> to understand how visitors use
+      Start Strong. Analytics data is anonymous. Google Fonts are also loaded
+      unconditionally on every page — see our
+      <a href={`${base}privacy-policy/`}>Privacy Policy</a> for details.
+    </p>
+    <div class="cookie-banner__actions">
+      <button id="cookie-accept" class="btn btn--primary btn--sm" type="button">
+        Accept Analytics
+      </button>
+      <button id="cookie-decline" class="btn btn--secondary btn--sm" type="button">
+        Decline
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Inline "Manage cookie settings" link — rendered into the footer by Footer.astro.
+     Hidden entirely when no GA ID is configured (controlled via JS below). -->
+<button
+  id="cookie-settings-trigger"
+  class="cookie-settings-trigger hidden"
+  type="button"
+  aria-label="Manage cookie settings"
+>
+  Manage cookie settings
+</button>
+
+<style>
+  /* ── Banner ── */
+  .cookie-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-xl);
+  }
+
+  #cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background-color: var(--color-dark);
+    color: rgba(255, 255, 255, 0.9);
+    padding: var(--space-lg) 0;
+    border-top: 3px solid var(--color-orange);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  #cookie-banner.hidden {
+    display: none;
+  }
+
+  .cookie-banner__text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cookie-banner__text a {
+    color: var(--color-orange);
+    text-decoration: underline;
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  /* ── Manage settings trigger ── */
+  .cookie-settings-trigger {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: color var(--transition), text-decoration-color var(--transition);
+    font-family: inherit;
+  }
+
+  .cookie-settings-trigger:hover {
+    color: var(--color-orange);
+    text-decoration-color: var(--color-orange);
+  }
+
+  .cookie-settings-trigger:focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .cookie-settings-trigger.hidden {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .cookie-banner__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  const CONSENT_KEY = 'ss_analytics_consent';
+
+  // ── Load GA4 ──────────────────────────────────────────────────────────────
+  function loadGA(): void {
+    const measurementId = (window as any).__GA_MEASUREMENT_ID__ as string | undefined;
+    // If empty or unset, analytics is not configured — do nothing.
+    if (!measurementId) return;
+
+    const script = document.createElement('script');
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+    script.async = true;
+    document.head.appendChild(script);
+
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
+    (window as any).gtag = gtag;
+    gtag('js', new Date());
+    // Note: anonymize_ip is a no-op in GA4 (always anonymised); kept for clarity.
+    gtag('config', measurementId, {
+      cookie_flags: 'SameSite=None;Secure',
+    });
+  }
+
+  // ── Show/hide the "Manage cookie settings" trigger ───────────────────────
+  function syncSettingsTrigger(): void {
+    const measurementId = (window as any).__GA_MEASUREMENT_ID__ as string | undefined;
+    const trigger = document.getElementById('cookie-settings-trigger');
+    if (!trigger) return;
+    // Only show the trigger when analytics is configured.
+    if (measurementId) {
+      trigger.classList.remove('hidden');
+    } else {
+      trigger.classList.add('hidden');
+    }
+  }
+
+  // ── Banner open/close ─────────────────────────────────────────────────────
+  function openBanner(): void {
+    const banner = document.getElementById('cookie-banner');
+    banner?.classList.remove('hidden');
+    // Move focus into the banner for accessibility
+    const firstBtn = banner?.querySelector<HTMLButtonElement>('button');
+    firstBtn?.focus();
+  }
+
+  function closeBanner(): void {
+    document.getElementById('cookie-banner')?.classList.add('hidden');
+  }
+
+  // ── Main init ─────────────────────────────────────────────────────────────
+  function initConsent(): void {
+    const measurementId = (window as any).__GA_MEASUREMENT_ID__ as string | undefined;
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const declineBtn = document.getElementById('cookie-decline');
+    const trigger = document.getElementById('cookie-settings-trigger');
+
+    syncSettingsTrigger();
+
+    // If analytics is not configured, there is nothing to consent to.
+    if (!measurementId) return;
+
+    const stored = localStorage.getItem(CONSENT_KEY);
+
+    if (stored === 'granted') {
+      loadGA();
+    } else if (!stored) {
+      // No previous decision — show banner after short delay.
+      setTimeout(openBanner, 1000);
+    }
+    // stored === 'denied' → do nothing.
+
+    // Accept
+    acceptBtn?.addEventListener('click', () => {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      closeBanner();
+      loadGA();
+    });
+
+    // Decline / Withdraw
+    declineBtn?.addEventListener('click', () => {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      closeBanner();
+      // If GA was already loaded this session, we can't unload it, but future
+      // page loads will not load it. Inform the user via the button text.
+      if (declineBtn.textContent?.trim() === 'Withdraw Consent') {
+        declineBtn.textContent = 'Consent withdrawn — takes effect on next visit';
+        declineBtn.disabled = true;
+      }
+    });
+
+    // "Manage cookie settings" trigger — re-opens banner and allows withdrawal.
+    trigger?.addEventListener('click', () => {
+      const current = localStorage.getItem(CONSENT_KEY);
+      // If user previously consented, update button label to make withdrawal clear.
+      if (current === 'granted' && declineBtn) {
+        declineBtn.textContent = 'Withdraw Consent';
+      }
+      openBanner();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initConsent);
+  } else {
+    initConsent();
+  }
+</script>

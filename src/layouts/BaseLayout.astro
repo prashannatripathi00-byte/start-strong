@@ -1,0 +1,144 @@
+---
+// BaseLayout.astro — shared HTML shell for every page
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalUrl?: string;
+  articleData?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+    section?: string;
+    tags?: string[];
+  };
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage,
+  ogType = 'website',
+  canonicalUrl,
+  articleData,
+  noIndex = false,
+} = Astro.props;
+
+const base   = import.meta.env.BASE_URL;
+// import.meta.env.SITE is the full site URL including base path,
+// e.g. "https://yourusername.github.io/start-strong"
+// Use it directly for building absolute URLs to assets.
+const site    = (import.meta.env.SITE ?? '').replace(/\/$/, '');
+const siteName = 'Start Strong';
+// OG image: full site URL + asset path (site already contains the base path)
+const defaultOgImage = `${site}/images/og-default.jpg`;
+const resolvedOgImage = ogImage ? `${site}${ogImage}` : defaultOgImage;
+// Canonical: Astro.site provides the full URL object; combine with current path.
+// Astro.url.pathname includes the base path (e.g. /start-strong/blog/).
+// Astro.site already contains the base, so we take just the *origin* from it
+// and append the full pathname to avoid double-stacking the base.
+const siteOrigin = Astro.site
+  ? `${Astro.site.protocol}//${Astro.site.host}`
+  : site;
+const canonical = canonicalUrl ?? `${siteOrigin}${Astro.url.pathname}`;
+
+// GA4 Measurement ID — set via PUBLIC_GA_MEASUREMENT_ID environment variable.
+// Leave blank (or omit) to disable analytics entirely.
+// Add to .env:  PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- SEO: Primary meta -->
+  <title>{title} | {siteName}</title>
+  <meta name="description" content={description} />
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonical} />
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type"        content={ogType} />
+  <meta property="og:site_name"   content={siteName} />
+  <meta property="og:title"       content={`${title} | ${siteName}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content={resolvedOgImage} />
+  <meta property="og:image:alt"   content={`${siteName} — ${title}`} />
+  <meta property="og:url"         content={canonical} />
+  <meta property="og:locale"      content="en_IE" />
+
+  <!-- SEO: Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={`${title} | ${siteName}`} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={resolvedOgImage} />
+
+  <!-- SEO: Article-specific Open Graph -->
+  {articleData && (
+    <>
+      {articleData.publishedTime && (
+        <meta property="article:published_time" content={articleData.publishedTime} />
+      )}
+      {articleData.modifiedTime && (
+        <meta property="article:modified_time" content={articleData.modifiedTime} />
+      )}
+      {articleData.author && (
+        <meta property="article:author" content={articleData.author} />
+      )}
+      {articleData.section && (
+        <meta property="article:section" content={articleData.section} />
+      )}
+      {articleData.tags && articleData.tags.map(tag => (
+        <meta property="article:tag" content={tag} />
+      ))}
+    </>
+  )}
+
+  <!-- Fonts (Google Fonts with display=swap for performance) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  {/* apple-touch-icon.png — add this file to public/icons/ to enable iOS home-screen icon */}
+  {/* <link rel="apple-touch-icon" href={`${base}icons/apple-touch-icon.png`} /> */}
+
+  <!-- Site verification (add tokens after connecting services) -->
+  <!-- <meta name="google-site-verification" content="YOUR_TOKEN_HERE" /> -->
+
+  <!-- GA4 Measurement ID for consent-gated loader in CookieConsent.astro -->
+  <script define:vars={{ GA_MEASUREMENT_ID }}>
+    window.__GA_MEASUREMENT_ID__ = GA_MEASUREMENT_ID;
+  </script>
+</head>
+
+<body>
+  <!-- Accessibility: skip navigation -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <Header />
+
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <CookieConsent />
+</body>
+</html>

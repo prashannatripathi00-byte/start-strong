@@ -1,0 +1,115 @@
+---
+// 404.astro — Custom not-found page
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you were looking for could not be found on Start Strong."
+  noIndex={true}
+>
+
+  <section class="not-found">
+    <div class="container text-center">
+      <div class="not-found__icon" aria-hidden="true">🏃</div>
+      <h1 class="not-found__code">404</h1>
+      <h2 class="not-found__title">You've Gone Off Course</h2>
+      <p class="not-found__text">
+        The page you're looking for doesn't exist or may have been moved.
+        Let's get you back on track.
+      </p>
+      <div class="not-found__actions">
+        <a href={base} class="btn btn--primary btn--lg">Go to Homepage</a>
+        <a href={`${base}blog/`} class="btn btn--secondary btn--lg">Browse the Blog</a>
+      </div>
+      <div class="not-found__links">
+        <p>Or jump straight to:</p>
+        <ul role="list">
+          <li><a href={`${base}start-running/`}>Start Running Guide</a></li>
+          <li><a href={`${base}running-gear/`}>Running Gear</a></li>
+          <li><a href={`${base}about/`}>About Start Strong</a></li>
+          <li><a href={`${base}contact/`}>Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-4xl);
+    background-color: var(--color-ivory);
+  }
+
+  .not-found__icon {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: var(--space-lg);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .not-found__icon { animation: none; }
+  }
+
+  .not-found__code {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 800;
+    color: var(--color-orange);
+    line-height: 1;
+    margin-bottom: var(--space-md);
+  }
+
+  .not-found__title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    margin-bottom: var(--space-lg);
+  }
+
+  .not-found__text {
+    font-size: 1.05rem;
+    color: var(--color-grey);
+    max-width: 420px;
+    margin-inline: auto;
+    margin-bottom: var(--space-2xl);
+    line-height: 1.65;
+  }
+
+  .not-found__actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .not-found__links p {
+    font-size: 0.9rem;
+    color: var(--color-grey);
+    margin-bottom: var(--space-sm);
+  }
+
+  .not-found__links ul {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .not-found__links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>

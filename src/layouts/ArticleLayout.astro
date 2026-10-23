@@ -1,0 +1,381 @@
+---
+// ArticleLayout.astro — wrapper for all blog articles
+import BaseLayout from './BaseLayout.astro';
+import SocialShare from '../components/SocialShare.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  relatedPosts?: CollectionEntry<'blog'>[];
+}
+
+const { post, relatedPosts = [] } = Astro.props;
+const { title, description, pubDate, updatedDate, author, category, tags, image, imageAlt, readingTime } = post.data;
+const base = import.meta.env.BASE_URL;
+// import.meta.env.SITE is the full site URL including base path.
+const site = (import.meta.env.SITE ?? '').replace(/\/$/, '');
+const articleUrl = `${site}/blog/${post.slug}/`;
+
+// Slug used for category filter links — must match the slug format used in
+// ArticleCard.astro and the blog index URL preselect logic.
+const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+
+const pubDateFormatted  = pubDate.toLocaleDateString('en-IE', { year: 'numeric', month: 'long', day: 'numeric' });
+const updDateFormatted  = updatedDate?.toLocaleDateString('en-IE', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// JSON-LD structured data for the article
+const jsonLD = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "datePublished": pubDate.toISOString(),
+  "dateModified": (updatedDate ?? pubDate).toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": author,
+    "url": site,
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Start Strong",
+    "url": site,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${site}/icons/logo.png`,
+    },
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": articleUrl,
+  },
+  ...(image ? { "image": `${site}${image}` } : {}),
+  "articleSection": category,
+  "keywords": tags.join(', '),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogType="article"
+  ogImage={image}
+  articleData={{
+    publishedTime: pubDate.toISOString(),
+    modifiedTime: (updatedDate ?? pubDate).toISOString(),
+    author,
+    section: category,
+    tags,
+  }}
+>
+  <!-- Reading progress bar -->
+  <div id="reading-progress" aria-hidden="true"></div>
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
+
+  <!-- Article hero -->
+  <div class="article-hero">
+    <div class="container container--narrow">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol role="list">
+          <li><a href={base}>Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href={`${base}blog/`}>Blog</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">{title}</li>
+        </ol>
+      </nav>
+
+      <!-- Category badge -->
+      <a href={`${base}blog/?category=${categorySlug}`} class="badge badge--orange article-category">
+        {category}
+      </a>
+
+      <!-- Title -->
+      <h1 class="article-hero__title">{title}</h1>
+
+      <!-- Meta -->
+      <div class="article-meta">
+        <span class="article-meta__author">By {author}</span>
+        <span class="article-meta__sep" aria-hidden="true">·</span>
+        <time class="article-meta__date" datetime={pubDate.toISOString()}>
+          {pubDateFormatted}
+        </time>
+        {updatedDate && (
+          <>
+            <span class="article-meta__sep" aria-hidden="true">·</span>
+            <span>Updated <time datetime={updatedDate.toISOString()}>{updDateFormatted}</time></span>
+          </>
+        )}
+        {readingTime && (
+          <>
+            <span class="article-meta__sep" aria-hidden="true">·</span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
+      </div>
+
+      <!-- Tags -->
+      {tags.length > 0 && (
+        <div class="article-tags" aria-label="Article tags">
+          {tags.map(tag => (
+            <span class="badge badge--dark">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Featured image -->
+  {image && (
+    <div class="article-featured-image">
+      <div class="container">
+        <img
+          src={image}
+          alt={imageAlt ?? title}
+          class="article-featured-image__img"
+          width="1200"
+          height="630"
+          loading="eager"
+        />
+      </div>
+    </div>
+  )}
+
+  <!-- Article body -->
+  <article class="article-body">
+    <div class="container">
+      <div class="article-layout">
+        <!-- Main content -->
+        <div class="article-content prose" id="article-content">
+          <slot />
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="article-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-card__title">Share This Article</h3>
+            <SocialShare title={title} url={articleUrl} />
+          </div>
+
+          {tags.length > 0 && (
+            <div class="sidebar-card">
+              <h3 class="sidebar-card__title">Tags</h3>
+              <div class="sidebar-tags">
+                {tags.map(tag => (
+                  <span class="badge badge--dark">{tag}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div class="sidebar-card sidebar-card--cta">
+            <p class="sidebar-cta__text">Ready to start your running journey?</p>
+            <a href={`${base}start-running/`} class="btn btn--primary" style="width:100%; justify-content:center;">
+              Start Running Guide →
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- Related articles -->
+  {relatedPosts.length > 0 && (
+    <section class="related-articles bg-ivory section--sm">
+      <div class="container">
+        <h2 class="related-articles__heading">Related Articles</h2>
+        <div class="grid-3">
+          {relatedPosts.slice(0, 3).map(related => (
+            <ArticleCard post={related} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="article-cta section--sm bg-dark">
+    <div class="container text-center">
+      <h2 class="text-white" style="margin-bottom:var(--space-md)">Start Your Running Journey Today</h2>
+      <p style="color:rgba(255,255,255,0.7); margin-bottom:var(--space-xl); max-width:480px; margin-inline:auto;">
+        Explore our beginner guides, training tips and gear advice — all in one place.
+      </p>
+      <div style="display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
+        <a href={`${base}start-running/`} class="btn btn--primary btn--lg">Start Running</a>
+        <a href={`${base}blog/`} class="btn btn--outline-white btn--lg">Explore the Blog</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* --- Hero --- */
+  .article-hero {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-xl);
+    background-color: var(--color-ivory);
+  }
+
+  .breadcrumb ol {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+    font-size: 0.85rem;
+    color: var(--color-grey);
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb a {
+    color: var(--color-grey);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { color: var(--color-orange); }
+
+  .article-category { margin-bottom: var(--space-md); }
+
+  .article-hero__title {
+    margin-bottom: var(--space-lg);
+    line-height: 1.2;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--color-grey);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+
+  .article-tags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  /* --- Featured image --- */
+  .article-featured-image {
+    padding-block: var(--space-xl);
+    background-color: var(--color-ivory);
+  }
+
+  .article-featured-image__img {
+    border-radius: var(--border-radius-lg);
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+
+  /* --- Body layout --- */
+  .article-body {
+    padding-block: var(--space-3xl);
+  }
+
+  .article-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+
+  /* --- Sidebar --- */
+  .article-sidebar {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .sidebar-card--cta {
+    background-color: var(--color-ivory);
+    border-color: var(--color-orange);
+  }
+
+  .sidebar-card__title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-grey);
+    margin-bottom: var(--space-md);
+  }
+
+  .sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .sidebar-cta__text {
+    font-size: 0.9rem;
+    color: var(--color-grey-dark);
+    margin-bottom: var(--space-md);
+  }
+
+  /* --- Related articles --- */
+  .related-articles__heading {
+    margin-bottom: var(--space-xl);
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 1024px) {
+    .article-layout {
+      grid-template-columns: 1fr;
+    }
+    .article-sidebar {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  // Reading progress bar
+  const progressBar = document.getElementById('reading-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+      progressBar.style.width = `${pct}%`;
+    }, { passive: true });
+  }
+
+  // Article engagement tracking via GA4
+  const articleTitle = document.querySelector('h1')?.textContent ?? 'Unknown';
+  const thresholds = [25, 50, 75, 100];
+  const reached = new Set<number>();
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const pct = Math.round((scrollTop / docHeight) * 100);
+    thresholds.forEach(t => {
+      if (pct >= t && !reached.has(t)) {
+        reached.add(t);
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'article_engagement', {
+            event_category: 'Engagement',
+            event_label: articleTitle,
+            scroll_depth: t,
+          });
+        }
+      }
+    });
+  }, { passive: true });
+</script>

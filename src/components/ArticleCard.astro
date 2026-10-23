@@ -1,0 +1,119 @@
+---
+// ArticleCard.astro — reusable blog card component
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate, category, image, imageAlt, readingTime } = post.data;
+const base = import.meta.env.BASE_URL;
+
+const dateFormatted = pubDate.toLocaleDateString('en-IE', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+---
+
+<article class={`card ${featured ? 'card--featured' : ''}`}>
+  <a href={`${base}blog/${post.slug}/`} class="card__image-link" tabindex="-1" aria-hidden="true">
+    {image ? (
+      <img
+        src={image}
+        alt={imageAlt ?? title}
+        class="card__image"
+        width="600"
+        height="338"
+        loading="lazy"
+      />
+    ) : (
+      <div class="card__image--placeholder" aria-hidden="true">🏃</div>
+    )}
+  </a>
+
+  <div class="card__body">
+    <div class="card__meta">
+      <a
+        href={`${base}blog/?category=${categorySlug}`}
+        class="badge badge--orange"
+        aria-label={`Category: ${category}`}
+      >
+        {category}
+      </a>
+      <span aria-hidden="true">·</span>
+      <time datetime={pubDate.toISOString()}>{dateFormatted}</time>
+      {readingTime && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{readingTime} min read</span>
+        </>
+      )}
+    </div>
+
+    <h3 class="card__title">
+      <a href={`${base}blog/${post.slug}/`} data-ga-article={title}>
+        {title}
+      </a>
+    </h3>
+
+    <p class="card__excerpt">{description}</p>
+
+    <div class="card__footer">
+      <a
+        href={`${base}blog/${post.slug}/`}
+        class="btn btn--secondary btn--sm"
+        aria-label={`Read ${title}`}
+      >
+        Read More →
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card__image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  }
+
+  .card__image-link:focus-visible {
+    outline: none;
+  }
+
+  .card__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background-color: var(--color-grey-light);
+    transition: transform var(--transition-slow);
+  }
+
+  .card:hover .card__image {
+    transform: scale(1.03);
+  }
+
+  .card--featured .card__title {
+    font-size: 1.25rem;
+  }
+</style>
+
+<script>
+  // Track article opens via GA4
+  document.querySelectorAll('[data-ga-article]').forEach(link => {
+    link.addEventListener('click', () => {
+      const title = (link as HTMLElement).dataset.gaArticle;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'article_open', {
+          event_category: 'Content',
+          event_label: title,
+        });
+      }
+    });
+  });
+</script>

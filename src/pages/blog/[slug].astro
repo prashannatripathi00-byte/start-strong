@@ -1,0 +1,27 @@
+---
+// blog/[slug].astro — Dynamic article page
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props:  { post, allPosts: posts },
+  }));
+};
+
+const { post, allPosts } = Astro.props;
+const { Content } = await post.render();
+
+// Related posts: same category, excluding current
+const related = allPosts
+  .filter(p => p.slug !== post.slug && p.data.category === post.data.category)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<ArticleLayout post={post} relatedPosts={related}>
+  <Content />
+</ArticleLayout>

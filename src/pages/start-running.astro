@@ -1,0 +1,649 @@
+---
+// start-running.astro — Beginner running guide page
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Start Running — Beginner's Complete Guide"
+  description="New to running? Our beginner's guide covers everything: how to prepare, warm up, pace yourself, avoid common mistakes and follow a 4-week training plan to build your running habit."
+>
+  <!-- Page Hero -->
+  <section class="page-hero bg-dark">
+    <div class="container">
+      <div class="page-hero__content">
+        <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb--light">
+          <ol role="list">
+            <li><a href={base}>Home</a></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page">Start Running</li>
+          </ol>
+        </nav>
+        <span class="page-hero__eyebrow">Your First Steps</span>
+        <h1 class="page-hero__title text-white">How to Start Running<br/>as a Complete Beginner</h1>
+        <p class="page-hero__subtitle">
+          Everything you need to begin — from lacing up for the first time
+          to completing your first continuous run.
+        </p>
+        <div class="page-hero__meta">
+          <span>📖 Approx. 15 min read</span>
+          <span>·</span>
+          <span>✅ Includes 4-week plan</span>
+          <span>·</span>
+          <span>⚕️ Includes health disclaimer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="toc-section bg-ivory">
+    <div class="container container--narrow">
+      <nav class="toc" aria-label="Page contents">
+        <h2 class="toc__heading">In This Guide</h2>
+        <ol class="toc__list">
+          <li><a href="#getting-started">Getting Started — What You Actually Need</a></li>
+          <li><a href="#first-run">Preparing for Your First Run</a></li>
+          <li><a href="#warmup">Warm-Up and Cool-Down Routines</a></li>
+          <li><a href="#pacing">Pacing — The Beginner's Golden Rule</a></li>
+          <li><a href="#mistakes">Common Mistakes to Avoid</a></li>
+          <li><a href="#four-week-plan">4-Week Beginner Training Plan</a></li>
+          <li><a href="#motivation">Staying Consistent and Motivated</a></li>
+          <li><a href="#disclaimer">Health and Safety Disclaimer</a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <article class="guide-content">
+    <div class="container container--narrow">
+
+      <!-- Section 1 -->
+      <section id="getting-started" class="guide-section">
+        <h2>Getting Started — What You Actually Need</h2>
+        <p>
+          One of the most common barriers to starting running is the belief that you
+          need expensive gear, a gym membership or a certain level of fitness before you begin.
+          That is not true. The barrier to entry for running is deliberately low.
+        </p>
+        <p>
+          Here is what you genuinely need before your first run:
+        </p>
+        <ul>
+          <li><strong>A supportive pair of running shoes.</strong> You do not need the most expensive model, but footwear that fits well and provides appropriate cushioning reduces the risk of discomfort and injury. See our <a href={`${base}running-gear/`}>Running Gear Guide</a> for practical advice.</li>
+          <li><strong>Comfortable clothing.</strong> Breathable, moisture-wicking fabric helps regulate temperature. Avoid heavy cotton on warm days.</li>
+          <li><strong>A safe, flat route.</strong> A local park, quiet road or running track is ideal for beginners. Flat ground is easier on the joints when you are starting out.</li>
+          <li><strong>Water.</strong> Stay hydrated before and after your run. For runs under 30 minutes, you likely do not need to carry water during the run itself.</li>
+        </ul>
+        <div class="info-box">
+          <strong>💡 Start Simple</strong><br/>
+          Many runners begin with nothing more than decent shoes, comfortable clothing and a willingness to step outside. Start with what you have.
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section id="first-run" class="guide-section">
+        <h2>Preparing for Your First Run</h2>
+        <p>
+          Your first run does not have to be long, fast or impressive. The single objective
+          on day one is to complete a short session and feel capable of going again.
+        </p>
+        <h3>Before You Head Out</h3>
+        <ul>
+          <li>Eat a light meal or snack 1–2 hours before. Avoid running on a completely empty stomach or immediately after a heavy meal.</li>
+          <li>Drink water in the hour before your run.</li>
+          <li>Choose a time that fits your schedule consistently — morning, lunchtime or evening all work depending on your preference.</li>
+          <li>Tell someone where you are going, particularly for evening runs.</li>
+          <li>Take your phone if you are running in an unfamiliar area.</li>
+        </ul>
+        <h3>What to Expect</h3>
+        <p>
+          It is normal to feel uncomfortable during your first few runs. Your breathing may
+          feel laboured, your legs may feel heavy and you may need to walk. This is not failure —
+          it is adaptation. Your cardiovascular system and muscles are adjusting to an unfamiliar demand.
+          Within two to three weeks, the same effort begins to feel noticeably easier.
+        </p>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="warmup" class="guide-section">
+        <h2>Warm-Up and Cool-Down Routines</h2>
+        <h3>Why Warming Up Matters</h3>
+        <p>
+          A short warm-up increases blood flow to your muscles, raises your heart rate gradually
+          and prepares your joints for the range of motion required during running.
+          It does not need to be elaborate.
+        </p>
+        <h3>Simple 5-Minute Warm-Up</h3>
+        <ul>
+          <li>2 minutes of brisk walking or marching in place</li>
+          <li>10 leg swings on each side (front-to-back and side-to-side)</li>
+          <li>10 hip circles on each side</li>
+          <li>10 walking lunges</li>
+          <li>30 seconds of light jogging in place</li>
+        </ul>
+        <h3>Cooling Down After Your Run</h3>
+        <p>
+          A cool-down helps your heart rate return to resting levels gradually and supports recovery.
+          Walk for 2–3 minutes after your run, then perform gentle stretches targeting the calves,
+          quadriceps, hamstrings and hip flexors. Hold each stretch for 20–30 seconds.
+        </p>
+        <div class="info-box">
+          <strong>⚠️ Note on Stretching</strong><br/>
+          Current sports science evidence does not strongly support static stretching immediately
+          before a run. Save deep stretching for after you have finished.
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="pacing" class="guide-section">
+        <h2>Pacing — The Beginner's Golden Rule</h2>
+        <p>
+          Beginners most commonly make the mistake of running too fast. This leads to rapid
+          breathlessness, early fatigue and a discouraging experience.
+        </p>
+        <p>
+          Use the <strong>conversational pace test</strong>: if you can hold a conversation
+          without gasping between words, your pace is appropriate for easy running.
+          If you cannot string a sentence together, you are running too hard.
+        </p>
+        <h3>What Easy Running Feels Like</h3>
+        <ul>
+          <li>Your breathing is elevated but controlled.</li>
+          <li>You feel like you could continue for significantly longer.</li>
+          <li>You are working but not struggling.</li>
+        </ul>
+        <p>
+          For most beginners, this means running much more slowly than feels natural.
+          That is correct. Speed develops naturally over time as your fitness builds.
+        </p>
+      </section>
+
+      <!-- Section 5 -->
+      <section id="mistakes" class="guide-section">
+        <h2>Common Mistakes to Avoid</h2>
+        <div class="mistakes-grid">
+          {[
+            {
+              mistake: 'Running too fast too soon',
+              fix: 'Use conversational pace. If you cannot speak in short sentences, slow down.',
+            },
+            {
+              mistake: 'Skipping the warm-up',
+              fix: 'Even a 3-minute walk before running reduces injury risk and improves performance.',
+            },
+            {
+              mistake: 'Increasing mileage too quickly',
+              fix: 'A common guideline is not to increase weekly running distance by more than 10% per week.',
+            },
+            {
+              mistake: 'Ignoring early pain signals',
+              fix: 'Discomfort from effort is normal. Sharp or localised joint pain is a signal to stop and rest.',
+            },
+            {
+              mistake: 'Running every day as a beginner',
+              fix: 'Two to three sessions per week with rest days allows your body to recover and adapt.',
+            },
+            {
+              mistake: 'Wearing the wrong footwear',
+              fix: 'Running in flat, unsupportive or worn-out shoes increases injury risk. See our gear guide.',
+            },
+          ].map(item => (
+            <div class="mistake-card">
+              <div class="mistake-card__header">
+                <span aria-hidden="true">❌</span>
+                <h4>{item.mistake}</h4>
+              </div>
+              <p class="mistake-card__fix"><strong>What to do instead:</strong> {item.fix}</p>
+            </div>
+          ))}
+        </div>
+        <p style="margin-top:var(--space-xl)">
+          For a deeper dive, read our article:
+          <a href={`${base}blog/common-running-mistakes-beginners-should-avoid/`}>
+            Common Running Mistakes Beginners Should Avoid
+          </a>.
+        </p>
+      </section>
+
+      <!-- Section 6: 4-week plan -->
+      <section id="four-week-plan" class="guide-section">
+        <h2>4-Week Beginner Training Plan</h2>
+        <div class="info-box">
+          <strong>⚕️ Important:</strong> This is a general educational training framework.
+          It is not personalised medical or fitness advice. Consult a healthcare professional
+          or qualified fitness instructor before beginning a new exercise programme,
+          particularly if you have an existing health condition, injury or have been
+          sedentary for an extended period.
+        </div>
+        <p>
+          This plan uses an interval structure — alternating walking and running — to build
+          your cardiovascular fitness and running-specific strength progressively.
+          Each session should take between 20 and 30 minutes including warm-up and cool-down.
+        </p>
+        <p>
+          Complete <strong>three sessions per week</strong> with at least one rest day between sessions.
+        </p>
+
+        <div class="plan-weeks">
+          {[
+            {
+              week: 'Week 1',
+              theme: 'Building the Habit',
+              colour: '#FF6B35',
+              sessions: [
+                { day: 'Session 1', detail: '5 min warm-up walk → repeat 5× [run 1 min / walk 4 min] → 3 min cool-down walk' },
+                { day: 'Session 2', detail: '5 min warm-up walk → repeat 5× [run 1 min / walk 4 min] → 3 min cool-down walk' },
+                { day: 'Session 3', detail: '5 min warm-up walk → repeat 6× [run 1 min / walk 4 min] → 3 min cool-down walk' },
+              ],
+              tip: 'Focus on completing the session, not speed. Slow down if necessary.',
+            },
+            {
+              week: 'Week 2',
+              theme: 'Building Confidence',
+              colour: '#e05520',
+              sessions: [
+                { day: 'Session 1', detail: '5 min warm-up → repeat 5× [run 2 min / walk 3 min] → cool-down' },
+                { day: 'Session 2', detail: '5 min warm-up → repeat 5× [run 2 min / walk 3 min] → cool-down' },
+                { day: 'Session 3', detail: '5 min warm-up → repeat 5× [run 2.5 min / walk 2.5 min] → cool-down' },
+              ],
+              tip: 'You may feel more comfortable this week. Keep your pace conversational.',
+            },
+            {
+              week: 'Week 3',
+              theme: 'Extending the Runs',
+              colour: '#d44a18',
+              sessions: [
+                { day: 'Session 1', detail: '5 min warm-up → repeat 4× [run 3 min / walk 2 min] → cool-down' },
+                { day: 'Session 2', detail: '5 min warm-up → repeat 4× [run 4 min / walk 1 min] → cool-down' },
+                { day: 'Session 3', detail: '5 min warm-up → repeat 3× [run 5 min / walk 2 min] → cool-down' },
+              ],
+              tip: 'Some fatigue is normal. If you need an extra rest day, take it.',
+            },
+            {
+              week: 'Week 4',
+              theme: 'First Continuous Run',
+              colour: '#c03e10',
+              sessions: [
+                { day: 'Session 1', detail: '5 min warm-up → run 8 min / walk 2 min / run 8 min → cool-down' },
+                { day: 'Session 2', detail: '5 min warm-up → run 12 min / walk 2 min / run 8 min → cool-down' },
+                { day: 'Session 3', detail: '5 min warm-up → run 20–25 min continuously → cool-down' },
+              ],
+              tip: 'Session 3 is your milestone run. Go slowly. You have earned it.',
+            },
+          ].map(w => (
+            <div class="plan-week">
+              <div class="plan-week__header" style={`border-left-color:${w.colour}`}>
+                <div>
+                  <span class="plan-week__number">{w.week}</span>
+                  <span class="plan-week__theme">{w.theme}</span>
+                </div>
+              </div>
+              <div class="plan-week__sessions">
+                {w.sessions.map(s => (
+                  <div class="plan-session">
+                    <span class="plan-session__label">{s.day}</span>
+                    <span class="plan-session__detail">{s.detail}</span>
+                  </div>
+                ))}
+              </div>
+              <p class="plan-week__tip">💡 {w.tip}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>After Week 4</h3>
+        <p>
+          Completing this plan means you can run continuously for 20+ minutes — a major achievement
+          for a beginner. From here you can explore:
+        </p>
+        <ul>
+          <li>Building toward a Parkrun (5K timed event, free, community-based)</li>
+          <li>Increasing your running duration gradually week by week</li>
+          <li>Adding a fourth weekly session once you feel consistently comfortable</li>
+        </ul>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="motivation" class="guide-section">
+        <h2>Staying Consistent and Motivated</h2>
+        <p>
+          Motivation will fluctuate. Building a running habit depends on consistency more
+          than any single outstanding session. Here are practical strategies that support
+          long-term adherence:
+        </p>
+        <ul>
+          <li><strong>Schedule your runs like appointments.</strong> Block the time in your calendar. Unscheduled workouts are easy to skip.</li>
+          <li><strong>Track your progress.</strong> Note your sessions in a running diary or app. Seeing what you have completed is motivating in itself.</li>
+          <li><strong>Find a running partner.</strong> Social accountability significantly increases adherence, particularly in the early weeks.</li>
+          <li><strong>Prepare the night before.</strong> Lay out your kit before bed. Reducing morning friction improves follow-through.</li>
+          <li><strong>Celebrate small wins.</strong> Completing Week 1 is worth acknowledging. Every session you finish is progress.</li>
+          <li><strong>Avoid all-or-nothing thinking.</strong> A 15-minute run when you planned 30 is still a run. Partial completion beats skipping.</li>
+        </ul>
+        <p>
+          For more motivational strategies, read:
+          <a href={`${base}blog/how-to-stay-motivated-and-build-a-running-habit/`}>
+            How to Stay Motivated and Build a Running Habit
+          </a>.
+        </p>
+      </section>
+
+      <!-- Section 8: Disclaimer -->
+      <section id="disclaimer" class="guide-section">
+        <h2>Health and Safety Disclaimer</h2>
+        <div class="disclaimer-box">
+          <p>
+            The information on this page is provided for general educational purposes only.
+            It is not a substitute for personalised medical advice, diagnosis or treatment.
+            Always seek the advice of a qualified healthcare professional before beginning
+            a new physical exercise programme.
+          </p>
+          <p>
+            This guidance is particularly important if you:
+          </p>
+          <ul>
+            <li>Have a pre-existing medical condition (including cardiovascular or respiratory conditions)</li>
+            <li>Are pregnant or recently postpartum</li>
+            <li>Are recovering from illness or injury</li>
+            <li>Have been sedentary for a prolonged period</li>
+            <li>Experience chest pain, dizziness or shortness of breath during exercise</li>
+          </ul>
+          <p>
+            Stop exercising and seek medical attention if you experience pain, dizziness,
+            chest tightness or any unusual symptoms during or after running.
+          </p>
+          <p style="margin-bottom:0">
+            Start Strong does not accept liability for injury arising from use of the
+            training plans or guidance on this website.
+          </p>
+        </div>
+      </section>
+
+      <!-- Internal links -->
+      <section class="guide-section related-content">
+        <h2>Continue Your Journey</h2>
+        <div class="grid-3">
+          {[
+            { href: `${base}blog/how-to-start-running-as-a-complete-beginner/`, label: 'Beginner Running Article' },
+            { href: `${base}running-gear/`, label: 'Running Gear Guide' },
+            { href: `${base}blog/how-to-stay-motivated-and-build-a-running-habit/`, label: 'Motivation & Habits' },
+          ].map(link => (
+            <a href={link.href} class="related-link-card">
+              <span>{link.label}</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </article>
+
+  <CTASection
+    heading="You've Got Everything You Need"
+    subtext="The plan is ready. The first step is yours. Let's go."
+    primaryLabel="Read Our Beginner Article"
+    primaryHref="blog/how-to-start-running-as-a-complete-beginner/"
+    secondaryLabel="Explore Running Gear"
+    secondaryHref="running-gear/"
+    gaLabel="start_running_bottom"
+  />
+
+</BaseLayout>
+
+<style>
+  /* Page hero */
+  .page-hero {
+    padding-block: var(--space-4xl);
+  }
+
+  .page-hero__content { max-width: 700px; }
+
+  .breadcrumb { margin-bottom: var(--space-lg); }
+  .breadcrumb ol {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+  }
+  .breadcrumb--light a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .breadcrumb--light a:hover { color: var(--color-orange); }
+  .breadcrumb--light li:last-child { color: rgba(255,255,255,0.4); }
+
+  .page-hero__eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-orange);
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    margin-bottom: var(--space-lg);
+  }
+
+  .page-hero__subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    margin-bottom: var(--space-lg);
+    line-height: 1.65;
+  }
+
+  .page-hero__meta {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    flex-wrap: wrap;
+  }
+
+  /* TOC */
+  .toc-section { padding-block: var(--space-xl); }
+
+  .toc {
+    background: var(--color-white);
+    border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
+  }
+
+  .toc__heading {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-grey);
+    margin-bottom: var(--space-md);
+  }
+
+  .toc__list {
+    padding-left: var(--space-lg);
+    margin: 0;
+  }
+
+  .toc__list li { margin-bottom: var(--space-xs); }
+  .toc__list a {
+    font-size: 0.9rem;
+    color: var(--color-grey-dark);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .toc__list a:hover { color: var(--color-orange); }
+
+  /* Guide content */
+  .guide-content { padding-block: var(--space-3xl); }
+
+  .guide-section { margin-bottom: var(--space-4xl); }
+  .guide-section h2 {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-grey-light);
+  }
+  .guide-section h3 { margin-top: var(--space-xl); margin-bottom: var(--space-sm); }
+  .guide-section p  { color: var(--color-grey-dark); line-height: 1.75; }
+  .guide-section ul, .guide-section ol { color: var(--color-grey-dark); line-height: 1.75; }
+
+  /* Info box */
+  .info-box {
+    background-color: var(--color-ivory);
+    border: 1px solid var(--color-grey-light);
+    border-left: 4px solid var(--color-orange);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    margin-block: var(--space-xl);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-grey-dark);
+  }
+
+  /* Mistakes grid */
+  .mistakes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .mistake-card {
+    background: var(--color-ivory);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-grey-light);
+  }
+
+  .mistake-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+  .mistake-card__header h4 { font-size: 0.95rem; }
+  .mistake-card__fix { font-size: 0.875rem; color: var(--color-grey); margin-bottom: 0; }
+
+  /* Plan */
+  .plan-weeks { display: flex; flex-direction: column; gap: var(--space-xl); margin-block: var(--space-xl); }
+
+  .plan-week {
+    background: var(--color-white);
+    border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+  }
+
+  .plan-week__header {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-ivory);
+    border-left: 5px solid var(--color-orange);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .plan-week__number {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-orange);
+    display: block;
+  }
+
+  .plan-week__theme {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    display: block;
+  }
+
+  .plan-week__sessions { padding: var(--space-md) var(--space-lg); }
+
+  .plan-session {
+    display: flex;
+    gap: var(--space-lg);
+    padding-block: var(--space-sm);
+    border-bottom: 1px solid var(--color-grey-light);
+    align-items: flex-start;
+  }
+  .plan-session:last-child { border-bottom: none; }
+
+  .plan-session__label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 80px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .plan-session__detail {
+    font-size: 0.875rem;
+    color: var(--color-grey-dark);
+    line-height: 1.55;
+  }
+
+  .plan-week__tip {
+    padding: var(--space-sm) var(--space-lg) var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-grey);
+    border-top: 1px solid var(--color-grey-light);
+    background: var(--color-ivory);
+    margin-bottom: 0;
+  }
+
+  /* Disclaimer */
+  .disclaimer-box {
+    background: #fff8f6;
+    border: 2px solid rgba(255,107,53,0.3);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
+  }
+  .disclaimer-box p, .disclaimer-box li {
+    font-size: 0.9rem;
+    color: var(--color-grey-dark);
+    line-height: 1.65;
+  }
+  .disclaimer-box p { margin-bottom: var(--space-md); }
+  .disclaimer-box ul { margin-bottom: var(--space-md); }
+
+  /* Related links */
+  .related-link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    background: var(--color-ivory);
+    border: 1px solid var(--color-grey-light);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--color-dark);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: border-color var(--transition), background-color var(--transition);
+  }
+  .related-link-card:hover {
+    border-color: var(--color-orange);
+    background-color: rgba(255,107,53,0.04);
+    color: var(--color-orange);
+  }
+
+  @media (max-width: 768px) {
+    .mistakes-grid { grid-template-columns: 1fr; }
+    .plan-session { flex-direction: column; gap: var(--space-xs); }
+    .plan-session__label { min-width: auto; }
+  }
+</style>
