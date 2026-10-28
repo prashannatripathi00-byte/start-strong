@@ -155,23 +155,27 @@ import { url } from '../utils/url';
 
     gaLoaded = true;
 
-    // Append gtag.js script first, then initialise via dataLayer.
-    // GA4 processes the dataLayer queue once the script loads.
+    // Step 1 — update consent to granted BEFORE gtag.js loads.
+    // The dataLayer and window.gtag already exist (set by BaseLayout.astro).
+    // This queues 'consent update granted' so that when gtag.js initialises
+    // it sees the granted state and immediately sends the page_view hit.
+    (window as any).gtag('consent', 'update', {
+      analytics_storage: 'granted',
+    });
+
+    // Step 2 — queue the GA4 config command (also before script loads).
+    (window as any).gtag('js', new Date());
+    (window as any).gtag('config', measurementId, {
+      anonymize_ip: true,
+      debug_mode: window.location.hostname === 'localhost',
+    });
+
+    // Step 3 — now append the gtag.js script. When it loads it drains the
+    // dataLayer queue in order: consent granted → js → config → page_view.
     const script = document.createElement('script');
     script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
     script.async = true;
     document.head.appendChild(script);
-
-    // Set up dataLayer and gtag AFTER appending the script so the library
-    // picks up these commands as it initialises.
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
-    (window as any).gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', measurementId, {
-      anonymize_ip: true,
-      debug_mode: window.location.hostname === 'localhost',
-    });
   }
 
   // ── Show/hide the "Manage cookie settings" trigger ───────────────────────

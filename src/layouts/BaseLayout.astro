@@ -129,6 +129,21 @@ const baseUrl = base.replace(/\/$/, '') + '/';
        script as a module and silently drops the inlined variable. -->
   <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
     window.__GA_MEASUREMENT_ID__ = GA_MEASUREMENT_ID;
+
+    // Consent Mode v2 — set analytics_storage denied by default BEFORE
+    // gtag.js ever loads. This must be the very first dataLayer interaction.
+    // GA4 will not send any hits until consent is updated to 'granted'.
+    if (GA_MEASUREMENT_ID) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+    }
   </script>
 </head>
 
