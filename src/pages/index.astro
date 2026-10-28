@@ -48,7 +48,11 @@ const categories = [
 
   <!-- ======================== HERO ======================== -->
   <section class="hero" aria-label="Welcome to Start Strong">
-    <div class="hero__backdrop" aria-hidden="true"></div>
+    <div
+      class="hero__backdrop"
+      aria-hidden="true"
+      style={`background-image:url('${import.meta.env.BASE_URL.replace(/\/$/,'')}/images/hero-running.jpg')`}
+    ></div>
     <div class="container hero__content">
       <div class="hero__text">
         <p class="hero__eyebrow">Start Strong · Your Running Journey Starts Here</p>
@@ -276,8 +280,18 @@ const categories = [
   .hero__backdrop {
     position: absolute;
     inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    background-color: var(--color-dark);
+  }
+
+  .hero__backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     background: radial-gradient(ellipse at 70% 50%, rgba(255,107,53,0.18) 0%, transparent 60%),
-                linear-gradient(135deg, #172025 0%, #0d1518 100%);
+                linear-gradient(135deg, rgba(23,32,37,0.88) 0%, rgba(13,21,24,0.96) 100%);
   }
 
   .hero__content {

@@ -18,30 +18,62 @@ const currentYear = new Date().getFullYear();
           Practical running advice, beginner training guides and the motivation
           to lace up and take your first step.
         </p>
-        <!-- Social icons — shown as non-interactive decoration until real account
-             URLs are available. To activate: replace each <span> with an <a> tag
-             pointing to the real profile URL, e.g.:
-               <a href="https://instagram.com/startstrong" class="social-link" ...>
-             Then remove the aria-hidden and add the data-social attribute for GA tracking. -->
-        <div class="footer__social" aria-label="Find us on social media (coming soon)">
-          <span class="social-link social-link--inactive" aria-hidden="true" title="Instagram — coming soon">
+        <div class="footer__social" aria-label="Find us on social media">
+          <!-- Instagram -->
+          <a
+            href="https://www.instagram.com/stro_ng213?cplk=N3NyN2R5YWNoNHRs&utm_source=qr"
+            class="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow us on Instagram"
+            data-social="instagram"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
-          </span>
-          <span class="social-link social-link--inactive" aria-hidden="true" title="Facebook — coming soon">
+          </a>
+          <!-- Facebook -->
+          <a
+            href="https://www.facebook.com/share/1KpSc5hZ3d/?mibextid=wwXIfr"
+            class="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow us on Facebook"
+            data-social="facebook"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
               <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
             </svg>
-          </span>
-          <span class="social-link social-link--inactive" aria-hidden="true" title="YouTube — coming soon">
+          </a>
+          <!-- TikTok -->
+          <a
+            href="https://www.tiktok.com/@start.strong56?_r=1&_t=ZN-9AuCo6WXqdS"
+            class="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow us on TikTok"
+            data-social="tiktok"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"></path>
+            </svg>
+          </a>
+          <!-- YouTube -->
+          <a
+            href="https://youtube.com/@startstrong-p7n?si=TC7cP5kwtKjvKSDT"
+            class="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Subscribe to our YouTube channel"
+            data-social="youtube"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20">
               <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
               <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"></polygon>
             </svg>
-          </span>
+          </a>
         </div>
       </div>
 
@@ -166,12 +198,6 @@ const currentYear = new Date().getFullYear();
     color: var(--color-white);
   }
 
-  /* Placeholder state — non-interactive, visually dimmed */
-  .social-link--inactive {
-    opacity: 0.35;
-    cursor: default;
-    pointer-events: none;
-  }
 
   /* Columns */
   .footer__heading {
@@ -254,15 +280,15 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <script>
-  // Social link click tracking — active once real <a> tags replace the placeholder spans.
-  // document.querySelectorAll('.social-link[data-social]').forEach(link => {
-  //   link.addEventListener('click', () => {
-  //     const platform = (link as HTMLElement).dataset.social;
-  //     if (typeof window.gtag === 'function') {
-  //       window.gtag('event', 'social_click', { event_category: 'Social Media', event_label: platform });
-  //     }
-  //   });
-  // });
+  // Social link click tracking
+  document.querySelectorAll('.social-link[data-social]').forEach(link => {
+    link.addEventListener('click', () => {
+      const platform = (link as HTMLElement).dataset.social;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'social_click', { event_category: 'Social Media', event_label: platform });
+      }
+    });
+  });
 
   // Move the cookie-settings-trigger (rendered by CookieConsent.astro) into
   // the footer slot so it appears in context with the copyright block.

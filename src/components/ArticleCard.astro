@@ -3,6 +3,18 @@
 import type { CollectionEntry } from 'astro:content';
 import { url } from '../utils/url';
 
+// Resolve an image path relative to the site base so images work under
+// both / (Netlify) and /start-strong (GitHub Pages).
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. '/start-strong'
+function imageUrl(src: string): string {
+  if (!src) return src;
+  // Already absolute (http/https) or already starts with the base — leave alone.
+  if (/^https?:\/\//.test(src)) return src;
+  if (src.startsWith(BASE + '/')) return src;
+  // Strip any leading slash so we don't double-up, then prepend base.
+  return `${BASE}/${src.replace(/^\//, '')}`;
+}
+
 interface Props {
   post: CollectionEntry<'blog'>;
   featured?: boolean;
@@ -24,7 +36,7 @@ const categorySlug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '
   <a href={url(`blog/${post.slug}/`)} class="card__image-link" tabindex="-1" aria-hidden="true">
     {image ? (
       <img
-        src={image}
+        src={imageUrl(image)}
         alt={imageAlt ?? title}
         class="card__image"
         width="600"
