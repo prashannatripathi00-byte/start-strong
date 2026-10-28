@@ -151,40 +151,27 @@ import { url } from '../utils/url';
   function loadGA(): void {
     if (gaLoaded) return;
     const measurementId = (window as any).__GA_MEASUREMENT_ID__ as string | undefined;
-    // If empty or unset, analytics is not configured — do nothing.
     if (!measurementId) return;
 
     gaLoaded = true;
 
-    // Set up the dataLayer queue BEFORE appending the async script.
-    // gtag.js drains this queue when it loads, so these commands are safe
-    // to call synchronously here even though the library hasn't fetched yet.
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
-    (window as any).gtag = gtag;
-
-    // GA4 Consent Mode v2 — signal that the user has granted consent.
-    // This must be called before gtag('config', ...) so GA4 stores it correctly.
-    gtag('consent', 'update', {
-      analytics_storage: 'granted',
-    });
-
-    gtag('js', new Date());
-    gtag('config', measurementId, {
-      // Anonymise IP addresses (belt-and-braces — GA4 does this by default).
-      anonymize_ip: true,
-      // SameSite cookie flag required for cross-origin iframes / previews.
-      cookie_flags: 'SameSite=None;Secure',
-      // Enable DebugView in GA4 when running on localhost so you can see
-      // events in real time during development without waiting for 24 h.
-      debug_mode: window.location.hostname === 'localhost',
-    });
-
-    // Append the gtag.js script tag after queueing the commands.
+    // Append gtag.js script first, then initialise via dataLayer.
+    // GA4 processes the dataLayer queue once the script loads.
     const script = document.createElement('script');
     script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
     script.async = true;
     document.head.appendChild(script);
+
+    // Set up dataLayer and gtag AFTER appending the script so the library
+    // picks up these commands as it initialises.
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
+    (window as any).gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', measurementId, {
+      anonymize_ip: true,
+      debug_mode: window.location.hostname === 'localhost',
+    });
   }
 
   // ── Show/hide the "Manage cookie settings" trigger ───────────────────────
