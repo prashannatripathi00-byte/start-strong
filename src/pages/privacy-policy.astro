@@ -3,7 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../utils/url';
 
-const lastUpdated = '23 October 2026';
+const lastUpdated = '28 October 2026';
 ---
 
 <BaseLayout
@@ -124,6 +124,12 @@ const lastUpdated = '23 October 2026';
           website footer, or by clearing your browser's localStorage for this website.
         </p>
         <p>
+          This website implements <strong>Google Consent Mode v2</strong>. Analytics storage
+          is set to <code>denied</code> by default on every page load. The gtag.js library
+          only receives consent to store data after you explicitly click "Accept Analytics".
+          If you decline, no analytics cookies are set and no tracking data is sent to Google.
+        </p>
+        <p>
           Contact communications are processed on the basis of <strong>legitimate interests</strong>
           — specifically our interest in responding to visitor enquiries.
         </p>
@@ -134,9 +140,9 @@ const lastUpdated = '23 October 2026';
         <p>We use the following third-party services:</p>
         <div class="third-party-table">
           {[
-            { service: 'Google Analytics 4', purpose: 'Anonymous website usage measurement', dataPolicy: 'https://policies.google.com/privacy' },
+            { service: 'Google Analytics 4', purpose: 'Anonymous website usage measurement (consent-gated)', dataPolicy: 'https://policies.google.com/privacy' },
             { service: 'Google Fonts', purpose: 'Serving web fonts (Poppins and Inter) — loaded on every page, before analytics consent', dataPolicy: 'https://policies.google.com/privacy' },
-            { service: 'GitHub Pages', purpose: 'Website hosting', dataPolicy: 'https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement' },
+            { service: 'Netlify', purpose: 'Website hosting and content delivery', dataPolicy: 'https://www.netlify.com/privacy/' },
           ].map(row => (
             <div class="third-party-row">
               <div>

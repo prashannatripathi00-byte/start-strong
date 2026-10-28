@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# netlify.toml — Netlify build and deploy configuration for Start Strong
+# ─────────────────────────────────────────────────────────────────────────────
+
+[build]
+  command   = "npm run build"
+  publish   = "dist"
+
+# Environment variables for the Netlify build.
+# PUBLIC_GA_MEASUREMENT_ID is set here so the build always bakes in the
+# Measurement ID.  Netlify also allows overriding these in the dashboard:
+# Site → Site configuration → Environment variables.
+[build.environment]
+  PUBLIC_SITE_URL          = "https://startstrongyour.netlify.app"
+  PUBLIC_BASE_PATH         = "/"
+  PUBLIC_GA_MEASUREMENT_ID = "G-NT68W9PQTW"
+
+# Redirect all 404s to Astro's custom 404 page (SPA-style fallback).
+[[redirects]]
+  from   = "/*"
+  to     = "/404.html"
+  status = 404
+
+# Security and caching headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# Cache static assets aggressively (content-hashed filenames)
+[[headers]]
+  for = "/_assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

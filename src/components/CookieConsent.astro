@@ -162,9 +162,22 @@ import { url } from '../utils/url';
     (window as any).dataLayer = (window as any).dataLayer || [];
     function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
     (window as any).gtag = gtag;
+
+    // GA4 Consent Mode v2 — signal that the user has granted consent.
+    // This must be called before gtag('config', ...) so GA4 stores it correctly.
+    gtag('consent', 'update', {
+      analytics_storage: 'granted',
+    });
+
     gtag('js', new Date());
     gtag('config', measurementId, {
+      // Anonymise IP addresses (belt-and-braces — GA4 does this by default).
+      anonymize_ip: true,
+      // SameSite cookie flag required for cross-origin iframes / previews.
       cookie_flags: 'SameSite=None;Secure',
+      // Enable DebugView in GA4 when running on localhost so you can see
+      // events in real time during development without waiting for 24 h.
+      debug_mode: window.location.hostname === 'localhost',
     });
 
     // Append the gtag.js script tag after queueing the commands.
